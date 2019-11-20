@@ -1,0 +1,13 @@
+{
+  "extends": ["airbnb"],
+  "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+  },
+  "rules": {
+      "linebreak-style": 0,
+      "no-unneeded-ternary": 0,
+      "import/prefer-default-export": 0
+  }
+}

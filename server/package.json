@@ -1,0 +1,21 @@
+{
+  "name": "memes",
+  "version": "1.0.0",
+  "description": "memes storage with authentication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "react",
+    "mongodb"
+  ],
+  "author": "Piska Piotr",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
