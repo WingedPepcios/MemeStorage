@@ -4,7 +4,7 @@
   "description": "memes storage with authentication",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "keywords": [
     "node",
@@ -12,5 +12,9 @@
     "mongodb"
   ],
   "author": "Piska Piotr",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12"
+  }
 }
