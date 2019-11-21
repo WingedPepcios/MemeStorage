@@ -1,4 +1,6 @@
+/* eslint-disable consistent-return */
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const User = mongoose.model('user');
 
@@ -30,5 +32,40 @@ module.exports = {
       return res.send({ isLogged: true, user });
     }
     return res.send({ isLogged: false });
+  },
+
+  loginUser: (req, res) => {
+    passport.authenticate('login', (err, user) => {
+      if (!user) {
+        return res.send({ message: 'Incorrect data' });
+      }
+      req.logIn(user, () => {
+        const { username } = user;
+        const userStats = {
+          username,
+        };
+        return res.send(userStats);
+      });
+    })(req, res);
+  },
+
+  registerUser: (req, res) => {
+    passport.authenticate('register', (err, user) => {
+      if (!user) {
+        return res.send({ message: 'User account actualy exist!' });
+      }
+      req.logIn(user, () => {
+        const { username } = user;
+        const userStats = {
+          username,
+        };
+        return res.send(userStats);
+      });
+    })(req, res);
+  },
+
+  logout: (req, res) => {
+    req.logout();
+    res.redirect('/');
   },
 };
