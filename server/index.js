@@ -2,8 +2,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+require('./models/User');
+
 const settings = require('./config');
 // const { notFound, catchErrors } = require('./middleware/errors');
+const users = require('./routes/users');
 
 // DG Connect
 mongoose.connect(settings.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -19,6 +22,7 @@ const app = express();
 
 // app.use(notFound);
 // app.use(catchErrors);
+app.use('/api/users', users());
 
 
 app.get('/', (req, res) => {
