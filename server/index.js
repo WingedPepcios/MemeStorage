@@ -5,6 +5,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
+
 require('./models/User');
 require('./services/passport');
 
@@ -39,16 +40,12 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'));
 
 // app.use(notFound);
 // app.use(catchErrors);
 app.use('/api/users', users());
-
-
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello world' });
-});
-
+require('./routes/account')(app);
 
 // Listen port
 app.listen(settings.PORT, () => {

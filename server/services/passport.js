@@ -50,10 +50,10 @@ passport.use(
     async (username, password, done) => {
       const existingUser = await User.findOne({ username });
       if (!existingUser) {
-        return done(null, { message: 'Account doesn\'t exist!' });
+        return done(null, false);
       }
       if (!existingUser.verifyPassword(password)) {
-        return done(null, { message: 'Incorrect password!' });
+        return done(null, false);
       }
       return done(null, existingUser);
     },

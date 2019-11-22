@@ -6,6 +6,14 @@ const requireLogin = (req, res, next) => {
   next();
 };
 
+const requireAdmin = (req, res, next) => {
+  if (req.user && !req.user.isAdmin) {
+    return res.status(401).send({ error: 'You need admin privileges!' });
+  }
+  next();
+};
+
 module.exports = {
   requireLogin,
+  requireAdmin,
 };
