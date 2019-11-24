@@ -7,6 +7,7 @@ const {
   registerUser,
   removeUser,
   logout,
+  update,
 } = require('../controllers/usersController');
 const {
   USER_NAME,
@@ -38,6 +39,9 @@ module.exports = () => {
 
   // POST /users
   api.post(USER_DEFAULT, loginUser);
+
+  // PUT /users/:username?values
+  api.put(USER_NAME, requireLogin, update);
 
   // DELETE /users/:username
   api.delete(USER_NAME, requireLogin, removeUser);
