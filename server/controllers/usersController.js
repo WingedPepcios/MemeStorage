@@ -54,14 +54,14 @@ module.exports = {
       }
       req.logIn(user, () => {
         const { username, isAdmin, privileges } = user;
-        return res.send({ user: { username, isAdmin, privileges } });
+        return res.stauts(201).send({ user: { username, isAdmin, privileges } });
       });
     })(req, res);
   },
 
   logout: (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.send({ message: 'Logged out sucessful' });
   },
 
   removeUser: async (req, res, next) => {
@@ -77,6 +77,21 @@ module.exports = {
       }
 
       return res.status(200).send({ message: 'Removed successful!' });
+    }
+    return next();
+  },
+
+  update: async (req, res, next) => {
+    const { user, body } = req;
+    const { username } = req.params;
+    if (user.username === username || user.isAdmin) {
+      const userToUpdate = await User.findOne({ username });
+      if (!userToUpdate) return res.status(404).send({ message: 'User not found!' });
+
+      // console.log(body, userToUpdate);
+      // TODO Add user params that can be updated
+
+      return res.status(200).send({ message: 'Updated sucessful' });
     }
     return next();
   },

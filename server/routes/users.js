@@ -8,6 +8,13 @@ const {
   removeUser,
   logout,
 } = require('../controllers/usersController');
+const {
+  USER_NAME,
+  USER_CURRENT,
+  USER_LOGOUT,
+  USER_REGISTER,
+  USER_DEFAULT,
+} = require('../templates/types').api;
 
 const { requireLogin, requireAdmin } = require('../middleware/login');
 
@@ -15,25 +22,25 @@ module.exports = () => {
   const api = Router();
 
   // GET /users/:username
-  api.get('/:username', requireLogin, findOne);
+  api.get(USER_NAME, requireLogin, findOne);
 
   // GET /users
-  api.get('/', requireLogin, requireAdmin, findAll);
+  api.get(USER_DEFAULT, requireLogin, requireAdmin, findAll);
 
   // GET /users/current
-  api.get('/current', requireLogin, currentUser);
+  api.get(USER_CURRENT, requireLogin, currentUser);
 
   // GET /users/logout
-  api.get('/logout', logout);
+  api.get(USER_LOGOUT, logout);
 
   // POST /users/register
-  api.post('/register', registerUser);
+  api.post(USER_REGISTER, registerUser);
 
   // POST /users
-  api.post('/', loginUser);
+  api.post(USER_DEFAULT, loginUser);
 
   // DELETE /users/:username
-  api.delete('/:username', requireLogin, removeUser);
+  api.delete(USER_NAME, requireLogin, removeUser);
 
   return api;
 };

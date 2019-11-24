@@ -44,7 +44,10 @@ app.use(express.static('public'));
 
 // app.use(notFound);
 // app.use(catchErrors);
-app.use('/api/users', users());
+
+const { api } = require('./templates/types');
+
+app.use(api.USER_API, users());
 require('./routes/account')(app);
 
 // Listen port

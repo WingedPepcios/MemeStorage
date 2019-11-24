@@ -11,6 +11,10 @@ const User = new Schema({
   password: String,
   isAdmin: { type: Boolean, default: false },
   privileges: { type: Number, default: 0 },
+  removed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 User.methods.verifyPassword = function verifyPassword(password) {

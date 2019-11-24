@@ -10,7 +10,12 @@ module.exports = (app) => {
     res.sendFile(path.resolve('./', 'public', 'register.html'));
   });
 
-  app.get('/panel', requireLogin, requireAdmin, (req, res) => {
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
+
+  app.get('/admin', requireLogin, requireAdmin, (req, res) => {
     res.sendFile(path.resolve('./', 'public', 'panel.html'));
   });
 };
