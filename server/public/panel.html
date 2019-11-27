@@ -9,7 +9,7 @@
 </head>
 <body>
   <h1>Panel</h1>
-  <div><a href="/api/users/logout">Logout</a></div>
+  <div><a href="/logout">Logout</a></div>
   <section style="margin-top: 15px;">
 
   </section>
@@ -35,18 +35,18 @@
       });     
     }
 
-      const remove = (user) => {
-        $.ajax({
-          url: `/api/users/${user}`,
-          type: 'DELETE',
-          dataType: 'json',
-          success: (json) => {
-            update();
-          }
-        });
-      }
+    const remove = (user) => {
+      $.ajax({
+        url: `/api/users/${user}`,
+        type: 'DELETE',
+        dataType: 'json',
+        success: (json) => {
+          update();
+        }
+      });
+    }
 
-      update();
-    </script>
+    update();
+  </script>
 </body>
 </html>

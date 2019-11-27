@@ -26,13 +26,13 @@ module.exports = {
     return res.status(200).send({ data });
   },
 
-  currentUser: (req, res) => {
+  currentUser: (req, res, next) => {
     const { user } = req;
     if (user) {
       const { username, isAdmin, privileges } = user;
       return res.send({ isLogged: true, user: { username, isAdmin, privileges } });
     }
-    return res.send({ isLogged: false });
+    return next();
   },
 
   loginUser: (req, res) => {
@@ -70,7 +70,9 @@ module.exports = {
     if (user.username === username || user.isAdmin) {
       const findUser = await User.findOne({ username });
       if (!findUser) return res.status(404).send({ message: 'User doesn\'t exist!' });
-      await findUser.remove();
+
+      findUser.removed = true;
+      await findUser.save();
 
       if (user.username === username) {
         req.logout();
@@ -82,13 +84,12 @@ module.exports = {
   },
 
   update: async (req, res, next) => {
-    const { user, body } = req;
+    const { user } = req;
     const { username } = req.params;
     if (user.username === username || user.isAdmin) {
       const userToUpdate = await User.findOne({ username });
       if (!userToUpdate) return res.status(404).send({ message: 'User not found!' });
 
-      // console.log(body, userToUpdate);
       // TODO Add user params that can be updated
 
       return res.status(200).send({ message: 'Updated sucessful' });
