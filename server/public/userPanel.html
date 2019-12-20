@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap-grid.min.css">
+</head>
+<body>
+  <h1>Witaj <span class="user"></span></h1>
+  <div><a href="/logout">Logout</a></div>
+  <form method="POST" action="/api/memes" enctype="multipart/form-data" class="meme mb-4">
+    <h3>Upload image</h3>
+    <div class="mb-2">
+      <input name="title" type="text" placeholder="Title" />
+    </div>
+    <div class="mb-2">
+      <input name="image" type="file" />
+    </div>
+    <div class="privileges mb-3"></div>
+    <button>Send</button>
+  </form>
+  <form method="POST" class="passwords mb-4">
+    <h3>Change password</h3>
+    <div class="mb-2">
+      <input name="password" type="password" placeholder="Password" />
+    </div>
+    <div class="mb-2">
+      <input name="passwordRepeat" type="password" placeholder="Password" />
+    </div>
+    <button>Change password</button>
+  </form>
+
+  <script>
+    function getUserData() {
+      $.ajax({
+        url: '/api/users/current',
+        type: 'get',
+        dataType: 'json',
+        success: (json) => {
+          console.log(json);
+          if (json.status) {
+            const { username, privileges } = json.user;
+            $('.user').html(username);
+            $('.passwords').attr('action', `/api/users/${username}`);
+            if (privileges) {
+              let html = `<div>
+                <h3 class="mb-1">Privileges</h3>`;
+              for (let index = 0; index <= privileges; index++) {
+                html += `
+                <div>
+                  <input type="radio" name="setPrivileges" value="${index}" id="priviliges_${index}"/>
+                  <label for="priviliges_${index}">${index === 0 ? 'Domyślne' : index === 1 ? 'Wtajemniczeni' : 'Ostrożnie!'}</label>
+                </div>`;
+              }
+              html += `</div>`;
+              $('.privileges').html(html);
+            }
+          }
+        }
+      });
+    }
+    getUserData();
+  </script>
+</body>
+</html>

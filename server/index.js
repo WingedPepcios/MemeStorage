@@ -7,10 +7,12 @@ const bodyParser = require('body-parser');
 
 
 require('./models/User');
+require('./models/Meme');
 require('./services/passport');
 
 const settings = require('./config');
 const users = require('./routes/users');
+const memes = require('./routes/memes');
 // const { notFound, catchErrors } = require('./middleware/errors');
 
 // DG Connect
@@ -41,13 +43,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
+app.use(express.static('data'));
 
 // app.use(notFound);
 // app.use(catchErrors);
 
-const { api } = require('./templates/types');
+const { user } = require('./templates/types');
 
-app.use(api.USER_API, users());
+app.use(user.USER_API, users());
+app.use('/api/memes', memes());
 require('./routes/account')(app);
 
 // Listen port

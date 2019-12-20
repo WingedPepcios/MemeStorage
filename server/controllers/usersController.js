@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const mongoose = require('mongoose');
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const { validRegisterData } = require('../services/validation');
 
 const User = mongoose.model('user');
 
@@ -13,24 +15,41 @@ module.exports = {
     const { privileges, isAdmin } = user;
 
     return res.status(200).send({
-      username, privileges, isAdmin,
+      status: 1,
+      user: {
+        username,
+        privileges,
+        isAdmin,
+      },
     });
   },
 
   findAll: async (req, res) => {
-    const users = await User.find().sort({ createdAt: 'desc' });
+    const { includeRemoved } = req.query;
+    const findQuery = includeRemoved ? {} : { removed: false };
+    const users = await User.find(findQuery).sort({ createdAt: 'desc' });
     const data = users.map((user) => {
-      const { username, isAdmin, privileges } = user;
-      return { username, isAdmin, privileges };
+      const {
+        username,
+        isAdmin,
+        privileges,
+        removed,
+      } = user;
+      return {
+        username,
+        isAdmin,
+        privileges,
+        removed,
+      };
     });
-    return res.status(200).send({ data });
+    return res.status(200).send({ status: 1, users: data });
   },
 
   currentUser: (req, res, next) => {
     const { user } = req;
     if (user) {
       const { username, isAdmin, privileges } = user;
-      return res.send({ isLogged: true, user: { username, isAdmin, privileges } });
+      return res.send({ status: 1, user: { username, isAdmin, privileges } });
     }
     return next();
   },
@@ -38,30 +57,33 @@ module.exports = {
   loginUser: (req, res) => {
     passport.authenticate('login', (err, user) => {
       if (!user) {
-        return res.send({ message: 'Incorrect data' });
+        return res.send({ status: 0, message: 'Incorrect data' });
       }
       req.logIn(user, () => {
         const { username, isAdmin, privileges } = user;
-        return res.send({ user: { username, isAdmin, privileges } });
+        return res.send({ status: 1, user: { username, isAdmin, privileges } });
       });
     })(req, res);
   },
 
   registerUser: (req, res) => {
     passport.authenticate('register', (err, user) => {
+      if (err) {
+        return res.status(200).send({ status: 0, errors: err });
+      }
       if (!user) {
-        return res.send({ message: 'Already exist!' });
+        return res.send({ status: 0, message: 'Already exist!' });
       }
       req.logIn(user, () => {
         const { username, isAdmin, privileges } = user;
-        return res.stauts(201).send({ user: { username, isAdmin, privileges } });
+        return res.status(201).send({ status: 1, user: { username, isAdmin, privileges } });
       });
     })(req, res);
   },
 
   logout: (req, res) => {
     req.logout();
-    res.send({ message: 'Logged out sucessful' });
+    res.send({ status: 1, message: 'Logged out sucessful' });
   },
 
   removeUser: async (req, res, next) => {
@@ -69,7 +91,9 @@ module.exports = {
     const { username } = req.params;
     if (user.username === username || user.isAdmin) {
       const findUser = await User.findOne({ username });
-      if (!findUser) return res.status(404).send({ message: 'User doesn\'t exist!' });
+      if (!findUser) {
+        return res.status(404).send({ status: 0, message: 'User doesn\'t exist!' });
+      }
 
       findUser.removed = true;
       await findUser.save();
@@ -78,7 +102,7 @@ module.exports = {
         req.logout();
       }
 
-      return res.status(200).send({ message: 'Removed successful!' });
+      return res.status(200).send({ status: 1, message: 'Removed successful!' });
     }
     return next();
   },
@@ -88,12 +112,33 @@ module.exports = {
     const { username } = req.params;
     if (user.username === username || user.isAdmin) {
       const userToUpdate = await User.findOne({ username });
-      if (!userToUpdate) return res.status(404).send({ message: 'User not found!' });
+      if (!userToUpdate) {
+        return res.status(404).send({ status: 0, message: 'User not found!' });
+      }
 
-      // TODO Add user params that can be updated
+      const { password, passwordRepeat } = req.body;
+      const validData = validRegisterData({ password, passwordRepeat });
+      if (validData) {
+        return res.status(200).send({ status: 0, errors: validData });
+      }
 
-      return res.status(200).send({ message: 'Updated sucessful' });
+      if (password) {
+        const hash = await bcrypt.hash(password, 10);
+        userToUpdate.password = hash;
+      }
+
+      userToUpdate.save();
+
+      return res.status(200).send({ status: 1, message: 'Updated sucessful' });
     }
     return next();
+  },
+
+  validData: (req, res) => {
+    const validData = validRegisterData({ ...req.query });
+    if (validData) {
+      return res.status(200).send({ status: 0, errors: validData });
+    }
+    return res.status(200).send({ status: 1, message: 'Correct' });
   },
 };

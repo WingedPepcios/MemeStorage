@@ -3,6 +3,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const { validRegisterData } = require('./validation');
+
 const User = mongoose.model('user');
 
 passport.serializeUser((user, done) => {
@@ -21,8 +23,14 @@ passport.use(
     {
       usernameField: 'username',
       passwordField: 'password',
+      passReqToCallback: true,
     },
-    async (username, password, done) => {
+    async (req, username, password, done) => {
+      const validData = validRegisterData({ ...req.body });
+      if (validData) {
+        return done(validData, null);
+      }
+
       const existingUser = await User.findOne({ username });
       if (existingUser) {
         return done(null, false);
@@ -48,7 +56,7 @@ passport.use(
       passwordField: 'password',
     },
     async (username, password, done) => {
-      const existingUser = await User.findOne({ username });
+      const existingUser = await User.findOne({ username, removed: false });
       if (!existingUser) {
         return done(null, false);
       }

@@ -1,5 +1,7 @@
-const api = require('./apiTypes');
+const user = require('./userTypes');
+const regex = require('./regexTypes');
 
 module.exports = {
-  api,
+  user,
+  regex,
 };

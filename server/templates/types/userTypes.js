@@ -5,4 +5,5 @@ module.exports = {
   USER_LOGOUT: '/logout',
   USER_REGISTER: '/register',
   USER_DEFAULT: '/',
+  USER_CHANGEPASSOWRD: '/changepassword',
 };

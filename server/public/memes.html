@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-  <h1>Panel</h1>
+  <h1>Memes</h1>
   <div><a href="/logout">Logout</a></div>
   <section style="margin-top: 15px;">
 
@@ -17,33 +17,27 @@
   <script>
     const update = () => {
       $.ajax({
-        url: '/api/users',
+        url: '/api/memes',
         type: 'get',
         dataType: 'json',
         success: (json) => {
-          console.log(json);
-          const { users } = json;
+          const { memes } = json;
           let html = '';
-          users.forEach((element) => {
-            html += `<div style="margin-bottom: 10px;">
-              <div>User: ${element.username}</div>
-              <div>Remove: <a onClick="remove('${element.username}')" style="color: red; text-decoration: none;">X</a></div>
-            </div>`;
+          memes.forEach((element) => {
+            const { title, url, author } = element;
+            html += `
+              <div>
+                <h5>${title}</h5>
+                <figure>
+                  <img src="${url}" alt="${title}" />
+                  <figcaption>${author}</figcaption>
+                </figure>
+              </div>
+            `;
           });
           $('section').html(html);
         }
       });     
-    }
-
-    const remove = (user) => {
-      $.ajax({
-        url: `/api/users/${user}`,
-        type: 'DELETE',
-        dataType: 'json',
-        success: (json) => {
-          update();
-        }
-      });
     }
 
     update();
