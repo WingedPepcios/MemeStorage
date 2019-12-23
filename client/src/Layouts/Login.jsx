@@ -1,25 +1,30 @@
 import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Form from '../Components/Form';
 import { Input } from '../Components/Input';
 import { formValidate } from '../Utils/FormUtils';
-import http from '../Utils/Instance';
+import { postLoginUser } from '../Actions';
+import { SET_USER_DATA } from '../Types/Reducers';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
       formValidate();
-      const userData = await http.post('/api/users', {
+      const userData = await postLoginUser({
         username: username.value,
         password: password.value,
       });
-      console.log(userData);
+      if (!userData.error) {
+        dispatch({ type: SET_USER_DATA, payload: userData })
+      }
     },
-    [username, password],
+    [username, password, dispatch],
   );
 
   return (

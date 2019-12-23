@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon ./server/index.js",
+    "client": "npm run start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "concurrently": "^5.0.2"
   }
 }
