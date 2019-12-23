@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "extends": [
+    "airbnb"
+  ],
+  "rules": {
+      "linebreak-style": 0,
+      "no-unneeded-ternary": 0,
+      "import/prefer-default-export": 0
+  }
+}
