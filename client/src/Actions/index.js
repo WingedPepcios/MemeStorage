@@ -1,5 +1,10 @@
 import http from '../Utils/Instance';
-import { USER_CURRENT, USER_DEFAULT, USER_LOGOUT } from '../Types/UserApi';
+import {
+  USER_CURRENT,
+  USER_DEFAULT,
+  USER_LOGOUT,
+  USER_REGISTER,
+} from '../Types/UserApi';
 import { MEME_DEFAULT } from '../Types/MemesApi';
 
 // GET
@@ -38,4 +43,22 @@ export const postLoginUser = async ({ username, password }) => {
     return user;
   }
   return { error: message };
+};
+
+export const postRegisterUser = async ({ username, password, repeatPassword }) => {
+  const response = await http.post(USER_REGISTER, { username, password, repeatPassword });
+  const { status, user, message } = response.data;
+  if (status) {
+    return user;
+  }
+  return { error: message };
+};
+
+export const postMeme = async (data) => {
+  const response = await http.post(MEME_DEFAULT, data);
+  const { status, meme } = response.data;
+  if (status) {
+    return meme;
+  }
+  return null;
 };

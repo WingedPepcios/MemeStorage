@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 
 import './Input.scss';
 
@@ -10,33 +11,29 @@ const Input = ({
   onChange,
   children,
   id,
-}) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  const onChangeInput = (e) => {
-    setInputValue(e.target.value);
-    if (onChange) {
-      onChange(e.target);
-    }
-  }
-
-  return (
-    <div className={`form__group --${type} ${classes}`}>
-      {children ? (
-        <label htmlFor={id} className={`form__label ${inputValue ? '--active' : ''}`}>
-          {children}
-        </label>
-      ) : null}
-      <input
-        id={id}
-        className="form__input"
-        type={type}
-        value={inputValue}
-        name={name}
-        onChange={(e) => onChangeInput(e)}
-      />
-    </div>
-  );
-};
+  checked,
+}) => (
+  <div className={`form__group --${type} ${classes ? classes : ''}`}>
+    {children && (type !== 'radio' && type !== 'checkbox') ? (
+      <label htmlFor={id} className={`form__label ${value ? '--active' : ''}`}>
+        {children}
+      </label>
+    ) : null}
+    <input
+      id={id}
+      className="form__input"
+      type={type}
+      value={value}
+      name={name}
+      onChange={(e) => onChange(e.target)}
+      checked={checked}
+    />
+    {children && (type === 'radio' || type === 'checkbox') ? (
+      <label htmlFor={id} className={`form__label ${value ? '--active' : ''}`}>
+        {children}
+      </label>
+    ) : null}
+  </div>
+);
 
 export default Input;

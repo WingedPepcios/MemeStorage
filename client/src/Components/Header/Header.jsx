@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { LOGIN_PAGE } from '../../Types/Routes';
+import { LOGIN_PAGE, REGISTER_PAGE } from '../../Types/Routes';
 import { logoutUser } from '../../Actions/Dispatch';
 import './Header.scss';
 
@@ -25,18 +25,22 @@ const Header = () => {
                 <button
                   type="button"
                   onClick={() => dispatch(logoutUser())}
+                  className="ml-3 p-3"
                 >
                   <i className="fas fa-power-off" />
                 </button>
               )
               : (
-                <Link to={LOGIN_PAGE}><i className="fas fa-user" /></Link>
+                <>
+                  <Link to={LOGIN_PAGE} className="ml-3 p-3"><i className="fas fa-user" /></Link>
+                  <Link to={REGISTER_PAGE} className="ml-3 p-3"><i className="fas fa-user-plus" /></Link>
+                </>
               )
           }
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default Header;

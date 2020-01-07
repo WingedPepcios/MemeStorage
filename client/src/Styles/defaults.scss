@@ -17,3 +17,62 @@ body {
   color: $color_default;
   background-color: $background;
 }
+
+a {
+  color: $color_default;
+  transition: color .3s;
+
+  &:hover {
+    color: $color_primary;
+  }
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: $color_default;
+  transition: color .3s;
+  cursor: pointer;
+
+  &:hover {
+    color: $color_primary;
+  }
+}
+
+.headline {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: $color_default;
+  transition: all .3s;
+  cursor: pointer;
+
+  &.--solid {
+    background-color: $color_primary;
+    border: 1px solid $color_primary;
+    padding: 12px 35px;
+
+    &:hover {
+      color: $color_default;
+      background-color: $color_secondary;
+      border-color: $color_secondary;
+    }
+  }
+}
+
+.form {
+  &__buttons {
+    text-align: center;
+    
+    .btn {
+      width: 100%;
+    }
+  }
+}

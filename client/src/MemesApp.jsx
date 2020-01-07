@@ -11,7 +11,13 @@ import { Header } from './Components/Header';
 import Login from './Layouts/Login';
 import Dashboard from './Layouts/Dashboard';
 import Main from './Layouts/Main';
-import { LOGIN_PAGE, PANEL_PAGE, DEFAULT_PAGE } from './Types/Routes';
+import Register from './Layouts/Register';
+import {
+  LOGIN_PAGE,
+  PANEL_PAGE,
+  DEFAULT_PAGE,
+  REGISTER_PAGE,
+} from './Types/Routes';
 import { dispatchUserData } from './Actions/Dispatch';
 
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
@@ -39,6 +45,13 @@ const MemesApp = () => {
           </Route>
           <Route path={PANEL_PAGE}>
             <Dashboard />
+          </Route>
+          <Route path={REGISTER_PAGE}>
+            {
+              user
+                ? <Redirect to={PANEL_PAGE} />
+                : <Register />
+            }
           </Route>
           <Route exact path={DEFAULT_PAGE}>
             <Main />
