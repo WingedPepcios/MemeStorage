@@ -15,12 +15,17 @@ const users = require('./routes/users');
 const memes = require('./routes/memes');
 // const { notFound, catchErrors } = require('./middleware/errors');
 
-// DG Connect
-mongoose.connect(settings.DB_URI, {
+const options = {
   useNewUrlParser: true,
+  reconnectTries: Number.MAX_VALUE,
+  reconnectInterval: 500,
+  connectTimeoutMS: 10000,
   useUnifiedTopology: true,
   useCreateIndex: true,
-});
+};
+
+// DG Connect
+mongoose.connect(settings.DB_URI, options);
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', (err) => {
   console.log('Error msg: ', err);
