@@ -1,41 +1,53 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { Header } from './Components/Header';
 import Login from './Layouts/Login';
 import Dashboard from './Layouts/Dashboard';
-import { LOGIN_PAGE, PANEL_PAGE } from './Types/Routes';
-import { addUserData } from './Actions/Dispatch';
+import Main from './Layouts/Main';
+import { LOGIN_PAGE, PANEL_PAGE, DEFAULT_PAGE } from './Types/Routes';
+import { dispatchUserData } from './Actions/Dispatch';
 
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import './Styles/defaults.scss';
 
 const MemesApp = () => {
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(addUserData());
+    dispatch(dispatchUserData());
   }, [dispatch]);
-
-  if (user) {
-    console.log(user);
-  }
 
   return (
     <Router>
-      <Switch>
-        <Route path={LOGIN_PAGE}>
-          { user 
-            ? <Redirect to={PANEL_PAGE} />
-            : <Login />
-          }
-        </Route>
-        <Route path={PANEL_PAGE}>
-          <Dashboard />
-        </Route>
-      </Switch>
+      <Header />
+      <div className="container">
+        <Switch>
+          <Route path={LOGIN_PAGE}>
+            {
+              user
+                ? <Redirect to={PANEL_PAGE} />
+                : <Login />
+            }
+          </Route>
+          <Route path={PANEL_PAGE}>
+            <Dashboard />
+          </Route>
+          <Route exact path={DEFAULT_PAGE}>
+            <Main />
+          </Route>
+        </Switch>
+      </div>
+      {/* Footer here */}
     </Router>
   );
-}
+};
 
 export default MemesApp;

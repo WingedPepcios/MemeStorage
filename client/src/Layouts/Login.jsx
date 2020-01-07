@@ -21,7 +21,7 @@ const Login = () => {
         password: password.value,
       });
       if (!userData.error) {
-        dispatch({ type: SET_USER_DATA, payload: userData })
+        dispatch({ type: SET_USER_DATA, payload: userData });
       }
     },
     [username, password, dispatch],

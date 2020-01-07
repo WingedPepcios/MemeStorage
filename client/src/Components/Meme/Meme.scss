@@ -1,0 +1,21 @@
+@import '../../Styles/variables';
+
+.meme {
+  &__title {
+    font-size: 2.4rem;
+  }
+  &__image {
+    background-color: $background_bright;
+
+    img {
+      max-width: 100%;
+    }
+  }
+  &__label span {
+    padding: 3px 8px;
+    background-color: $color_danger;
+  }
+  &__danger {
+    border-top: 3px solid $color_danger;
+  }
+}

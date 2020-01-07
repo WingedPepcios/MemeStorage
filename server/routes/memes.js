@@ -19,7 +19,7 @@ module.exports = () => {
   api.delete('/', requireLogin, removeMeme);
 
   // GET /
-  api.get('/', requireLogin, findAll);
+  api.get('/', findAll);
 
   // GET //:meme
   api.get('/:meme', requireLogin, findOne);

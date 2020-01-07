@@ -20,6 +20,7 @@ module.exports = {
       author: username,
       authorId: _id,
       url: path.replace('data\\', '\\'),
+      date: new Date(),
       ...data,
     }).save();
 
@@ -29,13 +30,15 @@ module.exports = {
 
   },
   findAll: async (req, res) => {
-    const { privileges } = req.user;
+    const privileges = req.user ? req.user.privileges : 0;
     const memes = await Meme.find({ memePrivileges: { $lte: privileges } }, {
-      author: 1,
+      _id: 1,
       url: 1,
+      author: 1,
       title: 1,
-      _id: 0,
-    });
+      date: 1,
+      memePrivileges: 1,
+    }, { sort: { date: -1 } });
 
     if (!memes.length) {
       return res.status(404).send({ status: 0, message: 'Ups! There is no meme for you' });

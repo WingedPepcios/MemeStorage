@@ -1,0 +1,19 @@
+@import './variables';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.4rem;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  color: $color_default;
+  background-color: $background;
+}

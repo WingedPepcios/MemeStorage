@@ -1,4 +1,4 @@
-import { SET_USER_DATA } from '../Types/Reducers';
+import { SET_USER_DATA, DELETE_USER_DATA } from '../Types/Reducers';
 
 const userReducer = (state = null, action) => {
   const { type, payload } = action;
@@ -7,7 +7,9 @@ const userReducer = (state = null, action) => {
       return {
         ...state,
         ...payload,
-      }
+      };
+    case DELETE_USER_DATA:
+      return null;
     default:
       return state;
   }

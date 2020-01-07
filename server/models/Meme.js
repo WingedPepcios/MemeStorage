@@ -16,6 +16,10 @@ const Meme = new Schema({
     default: 'Default name',
   },
   tags: [],
+  date: {
+    type: Date,
+    required: true,
+  },
   memePrivileges: { type: Number, default: 0 },
 });
 
