@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 
 require('./models/User');
@@ -57,7 +58,15 @@ const { user } = require('./templates/types');
 
 app.use(user.USER_API, users());
 app.use('/api/memes', memes());
-require('./routes/account')(app);
+// require('./routes/account')(app);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve('../', 'client', 'build', 'index.html'));
+  });
+}
 
 // Listen port
 app.listen(settings.PORT, () => {
