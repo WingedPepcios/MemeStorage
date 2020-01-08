@@ -9,13 +9,13 @@ const User = new Schema({
     unique: true,
   },
   password: String,
-  email: {
-    type: String,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-  },
+//  email: {
+//    type: String,
+//    unique: true,
+//    trim: true,
+//    lowercase: true,
+//    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+//  },
   isAdmin: { type: Boolean, default: false },
   privileges: { type: Number, default: 0 },
   removed: {

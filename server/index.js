@@ -48,27 +48,34 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('public'));
-app.use(express.static('data'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'data')));
 
 // app.use(notFound);
 // app.use(catchErrors);
 
 const { user } = require('./templates/types');
 
+app.get('/dashboard', (req, res, next) => {
+  if (!req.user) {
+    res.redirect('/login')
+  }
+  next()
+});
+
 app.use(user.USER_API, users());
 app.use('/api/memes', memes());
 // require('./routes/account')(app);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('../client/build'));
+  app.use(express.static('./client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve('../', 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve('./', 'client', 'build', 'index.html'));
   });
 }
 
 // Listen port
 app.listen(settings.PORT, () => {
-  console.log('Server UP!');
+  console.log('Server UP on port: ', settings.PORT);
 });

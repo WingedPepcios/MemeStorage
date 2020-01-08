@@ -1,2 +1,4 @@
 config/development.js
 data/images/*.*
+.env
+.dockerignore

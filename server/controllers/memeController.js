@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const pathFix = require('path');
 
 const Meme = mongoose.model('meme');
 
@@ -19,7 +20,7 @@ module.exports = {
     const newMeme = await new Meme({
       author: username,
       authorId: _id,
-      url: path.replace('data\\', '\\'),
+      url: path.replace(pathFix.resolve(__dirname, '../data'), ''),
       date: new Date(),
       ...data,
     }).save();
