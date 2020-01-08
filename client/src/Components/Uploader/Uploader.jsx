@@ -36,6 +36,7 @@ const Uploader = () => {
       if (response) {
         setMemePrivileges('0');
         setMemeTitle('');
+        setMemePreview('');
         memeRef.current.value = null;
       }
       // TODO - Alerty!
@@ -105,10 +106,10 @@ const Uploader = () => {
       <Input
         name="title"
         type="text"
-        placeholder="title"
         value={memeTitle}
         onChange={(target) => setMemeTitle(target.value)}
         classes="col-12 col-sm-7"
+        autoComplete="off"
       >
         Nagłówek mema
       </Input>

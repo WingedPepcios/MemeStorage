@@ -3,7 +3,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { LOGIN_PAGE, REGISTER_PAGE } from '../../Types/Routes';
+import { Menu, MenuLink } from '../Menu';
+import {
+  LOGIN_PAGE,
+  REGISTER_PAGE,
+  DEFAULT_PAGE,
+  PANEL_PAGE,
+} from '../../Types/Routes';
 import { logoutUser } from '../../Actions/Dispatch';
 import './Header.scss';
 
@@ -14,10 +20,35 @@ const Header = () => {
   return (
     <header className="container mb-5">
       <div className="row align-items-center">
-        <h1 className="logo col-12 col-sm-3">
-          <strong className="d-block">MemeStorage</strong>
-          <span className="d-block">Memy i nie tylko...</span>
+        <h1 className="logo col-6 col-sm-5">
+          <Link to={DEFAULT_PAGE}>
+            <strong className="d-block">MemeStorage</strong>
+            <span className="d-block">Memy i nie tylko...</span>
+          </Link>
         </h1>
+        {
+          user
+            ? (
+              <Menu type="byLink">
+                <MenuLink to={DEFAULT_PAGE}>
+                  Memy
+                </MenuLink>
+                <MenuLink to={PANEL_PAGE}>
+                  Dashboard
+                </MenuLink>
+                {
+                  user.isAdmin
+                    ? (
+                      <MenuLink>
+                        Admin
+                      </MenuLink>
+                    )
+                    : null
+                }
+              </Menu>
+            )
+            : null
+        }
         <div className="account ml-auto">
           {
             user

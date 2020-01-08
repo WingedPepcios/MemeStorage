@@ -54,17 +54,34 @@ app.use(express.static(path.join(__dirname, 'data')));
 // app.use(notFound);
 // app.use(catchErrors);
 
-const { user } = require('./templates/types');
+const { user, memeTypes } = require('./templates/types');
 
 app.get('/dashboard', (req, res, next) => {
   if (!req.user) {
-    res.redirect('/login')
+    res.redirect('/login');
+  } else {
+    next();
   }
-  next()
+});
+
+app.get('/login', (req, res, next) => {
+  if (req.user) {
+    res.redirect('/dashboard');
+  } else {
+    next();
+  }
+});
+
+app.get('/register', (req, res, next) => {
+  if (req.user) {
+    res.redirect('/dashboard');
+  } else {
+    next();
+  }
 });
 
 app.use(user.USER_API, users());
-app.use('/api/memes', memes());
+app.use(memeTypes.MEME_API, memes());
 // require('./routes/account')(app);
 
 if (process.env.NODE_ENV === 'production') {

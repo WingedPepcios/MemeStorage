@@ -4,6 +4,23 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  scrollbar-color: $color_primary $background_bright;
+	scrollbar-width: thin;
+
+	&::-webkit-scrollbar-track {
+		background-color: $background_bright;
+	}
+
+	&::-webkit-scrollbar {
+		width: 6px;
+		background-color: $background_bright;
+		height: 6px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $color_primary;
+	}
 }
 
 html {
@@ -16,14 +33,19 @@ body {
   font-weight: 400;
   color: $color_default;
   background-color: $background;
+
+
 }
 
 a {
   color: $color_default;
   transition: color .3s;
+  outline: none;
 
-  &:hover {
-    color: $color_primary;
+  @media (min-width: 757px) {
+    &:hover {
+      color: $color_gray;
+    }
   }
 }
 
@@ -33,9 +55,12 @@ button {
   color: $color_default;
   transition: color .3s;
   cursor: pointer;
+  outline: none;
 
-  &:hover {
-    color: $color_primary;
+  @media (min-width: 757px) {
+    &:hover {
+      color: $color_gray;
+    }
   }
 }
 
@@ -59,10 +84,12 @@ button {
     border: 1px solid $color_primary;
     padding: 12px 35px;
 
-    &:hover {
-      color: $color_default;
-      background-color: $color_secondary;
-      border-color: $color_secondary;
+    @media (min-width: 757px) {
+      &:hover {
+        color: $color_default;
+        background-color: $color_secondary;
+        border-color: $color_secondary;
+      }
     }
   }
 }

@@ -49,6 +49,7 @@ const Register = () => {
         value={repeatPassword}
         onChange={(target) => setRepeatPassword(target.value)}
         classes="col-12 col-sm-6"
+        minLength="10"
       >
         Password
       </Input>
@@ -58,6 +59,8 @@ const Register = () => {
         value={password}
         onChange={(target) => setPassword(target.value)}
         classes="col-12 col-sm-6"
+        legend="Hasło powinno składać się z conajmniej 10 znaków!"
+        minLength="10"
       >
         Repeat password
       </Input>

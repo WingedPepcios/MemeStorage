@@ -1,0 +1,36 @@
+@import '../../Styles/variables';
+
+.nav {
+  display: flex;
+  align-self: stretch;
+  align-items: stretch;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    text-decoration: none;
+    position: relative;
+
+    &:after {
+      content: '';
+      width: 0;
+      transition: width .3s;
+      height: 3px;
+      background-color: $color_primary;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+      margin: auto;
+    }
+
+    &.active {
+      &:after {
+        content: '';
+        width: 100%;
+      }
+    }
+  }
+}

@@ -55,6 +55,7 @@
       padding: 15px 20px;
       color: $color_default;
       width: 100%;
+      outline: none;
     }
     label {
       position: absolute;
@@ -87,4 +88,9 @@
       border: 2px solid $color_gray;
     }
   }
+}
+.form__legend {
+  font-style: italic;
+  margin-top: .5rem;
+  font-size: 1.2rem;
 }
