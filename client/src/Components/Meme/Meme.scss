@@ -11,11 +11,26 @@
       max-width: 100%;
     }
   }
-  &__label span {
-    padding: 3px 8px;
-    background-color: $color_danger;
-  }
-  &__danger {
-    border-top: 3px solid $color_danger;
+  &__label {
+    border-top: 3px solid;
+    &.security_1 {
+      border-color: $color_primary;
+
+      span {
+        background-color: $color_primary;
+      }
+    }
+    &.security_2 {
+      border-color: $color_danger;
+
+      span {
+        background-color: $color_danger;
+      }
+    }
+
+    span {
+      padding: 3px 8px;
+      font-weight: bold;
+    }
   }
 }

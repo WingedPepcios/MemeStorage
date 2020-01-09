@@ -39,7 +39,13 @@ const Input = ({
     ) : null}
     {
       legend
-        ? <p className="form__legend">{legend}</p>
+        ? (
+          <p
+            className={`form__legend ${(type === 'radio' || type === 'checkbox') && checked ? 'active' : ''}`}
+          >
+            {legend}
+          </p>
+        )
         : null
     }
   </div>

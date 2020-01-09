@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 const pathFix = require('path');
 
@@ -31,8 +32,15 @@ module.exports = {
 
   },
   findAll: async (req, res) => {
+    const { user } = req.params;
     const privileges = req.user ? req.user.privileges : 0;
-    const memes = await Meme.find({ memePrivileges: { $lte: privileges } }, {
+    const filter = {
+      memePrivileges: { $lte: privileges },
+    };
+    if (user) {
+      filter.author = user;
+    }
+    const memes = await Meme.find(filter, {
       _id: 1,
       url: 1,
       author: 1,
@@ -47,7 +55,22 @@ module.exports = {
 
     return res.status(200).send({ status: 1, memes });
   },
-  findOne: () => {
+  updateMeme: async (req, res) => {
+    const { id } = req.params;
+    const meme = await Meme.find({ _id: id });
 
+    if (meme.authorId !== req.user._id) {
+      return res.status(401).send({ status: 0, message: 'Access Denied!' });
+    }
+
+    const { title, setPrivileges } = req.body;
+    if (title) meme.title = title;
+    if (setPrivileges) meme.memePrivileges = setPrivileges;
+
+    const response = await meme.save();
+    if (!response) {
+      res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
+    }
+    return res.status(200).send({ status: 1, response });
   },
 };

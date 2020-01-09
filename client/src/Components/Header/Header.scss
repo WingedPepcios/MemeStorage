@@ -1,6 +1,11 @@
 @import '../../Styles/variables';
 
+header {
+  padding-top: 1rem;
+}
+
 .logo {
+  font-size: 2rem;
   a {
     text-decoration: none;
   }

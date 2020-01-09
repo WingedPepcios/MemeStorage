@@ -48,7 +48,7 @@ const Main = () => {
                 url={url}
                 title={title}
                 date={getStringFromDate(date)}
-                labels={memePrivileges === 1 ? 'Wtajemniczeni' : memePrivileges === 2 ? 'Ostrożnie!' : null}
+                labels={memePrivileges}
               />
             );
           })}

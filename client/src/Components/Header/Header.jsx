@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header className="container mb-5">
       <div className="row align-items-center">
-        <h1 className="logo col-6 col-sm-5">
+        <h1 className="logo col-5 col-sm-5">
           <Link to={DEFAULT_PAGE}>
             <strong className="d-block">MemeStorage</strong>
             <span className="d-block">Memy i nie tylko...</span>

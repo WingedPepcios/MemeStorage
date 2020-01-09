@@ -68,6 +68,7 @@ const Uploader = () => {
           value="1"
           checked={memePrivileges === '1'}
           onChange={handleChange}
+          legend="* Tylko dla sprawdzonych osób"
         >
           Wtajemniczeni
         </Input>,
@@ -83,6 +84,7 @@ const Uploader = () => {
           value="2"
           checked={memePrivileges === '2'}
           onChange={handleChange}
+          legend="** Totalne niebezpieczeństwo jeśli wycieknie!"
         >
           Ostrożnie!
         </Input>,
@@ -102,18 +104,37 @@ const Uploader = () => {
   };
 
   return (
-    <Form classes="uploader row" onSubmit={handleSubmit}>
-      <Input
-        name="title"
-        type="text"
-        value={memeTitle}
-        onChange={(target) => setMemeTitle(target.value)}
-        classes="col-12 col-sm-7"
-        autoComplete="off"
-      >
-        Nagłówek mema
-      </Input>
-      <div className="form__group --file col-12 col-sm-7">
+    <Form classes="uploader row mb-5" onSubmit={handleSubmit}>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="title"
+          type="text"
+          value={memeTitle}
+          onChange={(target) => setMemeTitle(target.value)}
+          autoComplete="off"
+        >
+          Nagłówek mema
+        </Input>
+        <Input
+          name="tags"
+          type="text"
+          autoComplete="off"
+          disabled
+        >
+          Tagi (wkrótce)
+        </Input>
+        {
+          user && user.privileges
+            ? (
+              <div className="form__group_radio">
+                <div className="headline">Uprawnienia dostepu</div>
+                { showPrivilegesData() }
+              </div>
+            )
+            : null
+        }
+      </div>
+      <div className="form__group --file col-12 col-sm-6">
         <label htmlFor="memePicture">
           {
             memePreview
@@ -127,13 +148,7 @@ const Uploader = () => {
         </label>
         <input id="memePicture" type="file" ref={memeRef} onChange={(e) => renderImage(e.target)} className="form__input" />
       </div>
-      <div className="form__group_radio col-12 col-sm-7">
-        <div className="headline">Uprawnienia dostepu</div>
-        {
-          user ? showPrivilegesData() : null
-        }
-      </div>
-      <div className="col-12 col-sm-7">
+      <div className="col-12">
         <button className="btn --solid" type="submit">Udostępnij</button>
       </div>
     </Form>

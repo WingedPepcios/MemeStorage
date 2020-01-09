@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -25,8 +26,16 @@ const Meme = ({
     </div>
     <div className={`meme__image ${labels ? 'meme__danger' : null}`}>
       {labels ? (
-        <div className="meme__label d-flex justify-content-start">
-          <span>{labels}</span>
+        <div className={`meme__label d-flex justify-content-start security_${labels}`}>
+          <span>
+            {
+              labels === 1
+                ? 'Wtajemniczeni'
+                : labels === 2
+                  ? 'Ostrożnie!'
+                  : null
+            }
+          </span>
         </div>
       ) : null}
       <figure className="p-5 d-flex justify-content-center">

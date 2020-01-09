@@ -6,7 +6,7 @@ const {
   addMeme,
   removeMeme,
   findAll,
-  findOne,
+  updateMeme,
 } = require('../controllers/memeController');
 
 module.exports = () => {
@@ -21,8 +21,11 @@ module.exports = () => {
   // GET /
   api.get('/', findAll);
 
-  // GET //:meme
-  api.get('/:meme', requireLogin, findOne);
+  // GET //:user
+  api.get('/:user', requireLogin, findAll);
+
+  // POST
+  api.post('/:id', requireLogin, updateMeme);
 
   return api;
 };
