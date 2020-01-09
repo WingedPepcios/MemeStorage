@@ -1,0 +1,15 @@
+@import '../../Styles/variables';
+
+.user_meme {
+  margin-bottom: 5rem;
+  &__image {
+    background-color: $background_bright;
+    height: 100%;
+  }
+}
+
+.user_memes {
+  .headline {
+    margin-bottom: 3rem;
+  }
+}

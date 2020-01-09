@@ -17,6 +17,15 @@ export const getCurrentUserData = async () => {
   return null;
 };
 
+export const getUserMemes = async (user) => {
+  const response = await http.get(`${MEME_DEFAULT}/${user}`);
+  const { status, memes } = response.data;
+  if (status) {
+    return memes;
+  }
+  return null;
+};
+
 export const getMemes = async () => {
   const response = await http.get(MEME_DEFAULT);
   const { status, memes } = response.data;
@@ -56,6 +65,15 @@ export const postRegisterUser = async ({ username, password, repeatPassword }) =
 
 export const postMeme = async (data) => {
   const response = await http.post(MEME_DEFAULT, data);
+  const { status, meme } = response.data;
+  if (status) {
+    return meme;
+  }
+  return null;
+};
+
+export const postMemeUpdate = async (id, data) => {
+  const response = await http.post(`${MEME_DEFAULT}/${id}`, data);
   const { status, meme } = response.data;
   if (status) {
     return meme;

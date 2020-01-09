@@ -33,8 +33,10 @@ body {
   font-weight: 400;
   color: $color_default;
   background-color: $background;
+}
 
-
+img {
+  max-width: 100%;
 }
 
 a {

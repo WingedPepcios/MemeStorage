@@ -40,6 +40,7 @@ module.exports = {
     if (user) {
       filter.author = user;
     }
+
     const memes = await Meme.find(filter, {
       _id: 1,
       url: 1,
@@ -57,9 +58,9 @@ module.exports = {
   },
   updateMeme: async (req, res) => {
     const { id } = req.params;
-    const meme = await Meme.find({ _id: id });
+    const meme = await Meme.findOne({ _id: id });
 
-    if (meme.authorId !== req.user._id) {
+    if (JSON.stringify(meme.authorId) !== JSON.stringify(req.user._id)) {
       return res.status(401).send({ status: 0, message: 'Access Denied!' });
     }
 

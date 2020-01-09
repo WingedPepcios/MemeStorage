@@ -104,7 +104,7 @@ const Uploader = () => {
   };
 
   return (
-    <Form classes="uploader row mb-5" onSubmit={handleSubmit}>
+    <Form classes="uploader row" onSubmit={handleSubmit}>
       <div className="col-12 col-sm-6">
         <Input
           name="title"
