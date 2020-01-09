@@ -6,6 +6,9 @@ header {
 
 .logo {
   font-size: 2rem;
+  @media (min-width: 979px) {
+    font-size: 3rem;
+  }
   a {
     text-decoration: none;
   }

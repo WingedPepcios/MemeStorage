@@ -33,10 +33,12 @@ body {
   font-weight: 400;
   color: $color_default;
   background-color: $background;
+  overflow-x: hidden;
 }
 
 img {
   max-width: 100%;
+  vertical-align: top;
 }
 
 a {

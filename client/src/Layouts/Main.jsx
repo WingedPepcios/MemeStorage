@@ -7,6 +7,7 @@ import { dispatchMemes } from '../Actions/Dispatch';
 
 const Main = () => {
   const { memes } = useSelector((state) => state);
+  const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,15 +41,19 @@ const Main = () => {
               title,
               date,
               memePrivileges,
+              reactions,
             } = meme;
             return (
               <Meme
                 key={_id}
+                id={_id}
                 author={author}
                 url={url}
                 title={title}
                 date={getStringFromDate(date)}
                 labels={memePrivileges}
+                reactions={reactions}
+                isUser={!user === false}
               />
             );
           })}

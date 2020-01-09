@@ -8,24 +8,36 @@ const {
   findAll,
   updateMeme,
 } = require('../controllers/memeController');
+const {
+  addReaction,
+} = require('../controllers/reactionController');
+const {
+  MEME_DEFAULT,
+  MEME_BY_ID,
+  MEME_BY_USER,
+  MEME_VOTE,
+} = require('../templates/types/memeTypes');
 
 module.exports = () => {
   const api = Router();
 
   // POST /memes
-  api.post('/', requireLogin, upload.single('image'), addMeme);
+  api.post(MEME_DEFAULT, requireLogin, upload.single('image'), addMeme);
 
   // DELETE /
-  api.delete('/', requireLogin, removeMeme);
+  api.delete(MEME_BY_ID, requireLogin, removeMeme);
 
   // GET /
-  api.get('/', findAll);
+  api.get(MEME_DEFAULT, findAll);
 
   // GET //:user
-  api.get('/:user', requireLogin, findAll);
+  api.get(MEME_BY_USER, requireLogin, findAll);
 
   // POST
-  api.post('/:id', requireLogin, updateMeme);
+  api.post(MEME_BY_ID, requireLogin, updateMeme);
+
+  // POST /vote/:id?reaction
+  api.post(MEME_VOTE, requireLogin, addReaction);
 
   return api;
 };

@@ -21,6 +21,16 @@ const Meme = new Schema({
     required: true,
   },
   memePrivileges: { type: Number, default: 0 },
+  reactions: {
+    positive: {
+      type: Number,
+      default: 0,
+    },
+    negative: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 
 mongoose.model('meme', Meme);

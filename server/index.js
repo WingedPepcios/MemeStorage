@@ -9,6 +9,7 @@ const path = require('path');
 
 require('./models/User');
 require('./models/Meme');
+require('./models/Reaction');
 require('./services/passport');
 
 const settings = require('./config');

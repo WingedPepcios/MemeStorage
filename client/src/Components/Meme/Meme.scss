@@ -33,4 +33,35 @@
       font-weight: bold;
     }
   }
+  &__reactions {
+    margin-top: 5px;
+  }
+  .reaction {
+    text-align: left;
+
+    &:not(:last-child) {
+      margin-right: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    &__icon {
+      padding-right: 1rem;
+      font-size: 2rem;
+    }
+    &__value {
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    &.--positive {
+      .reaction__icon {
+        color: $color_success
+      }
+    }
+    &.--negative {
+      .reaction__icon {
+        color: $color_danger
+      }
+    }
+  }
 }

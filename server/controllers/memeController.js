@@ -28,8 +28,19 @@ module.exports = {
 
     return res.status(201).send({ status: 1, meme: newMeme });
   },
-  removeMeme: () => {
+  removeMeme: async (req, res) => {
+    const { id } = req.params;
+    const meme = await Meme.findOne({ _id: id });
 
+    if (JSON.stringify(meme.authorId) !== JSON.stringify(req.user._id)) {
+      return res.status(401).send({ status: 0, message: 'Access Denied!' });
+    }
+
+    const response = await meme.remove();
+    if (!response) {
+      return res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
+    }
+    return res.status(200).send({ status: 1, response });
   },
   findAll: async (req, res) => {
     const { user } = req.params;
@@ -48,6 +59,7 @@ module.exports = {
       title: 1,
       date: 1,
       memePrivileges: 1,
+      reactions: 1,
     }, { sort: { date: -1 } });
 
     if (!memes.length) {
@@ -70,7 +82,7 @@ module.exports = {
 
     const response = await meme.save();
     if (!response) {
-      res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
+      return res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
     }
     return res.status(200).send({ status: 1, response });
   },

@@ -34,7 +34,15 @@ const UserMemes = () => {
               title,
               memePrivileges,
             } = meme;
-            return <UserMeme key={_id} id={_id} url={url} title={title} memePrivileges={memePrivileges} />;
+            return (
+              <UserMeme
+                key={_id}
+                id={_id}
+                url={url}
+                title={title}
+                memePrivileges={memePrivileges}
+              />
+            );
           })
           : null
       }

@@ -5,7 +5,10 @@ import {
   USER_LOGOUT,
   USER_REGISTER,
 } from '../Types/UserApi';
-import { MEME_DEFAULT } from '../Types/MemesApi';
+import {
+  MEME_DEFAULT,
+  MEME_VOTE,
+} from '../Types/MemesApi';
 
 // GET
 export const getCurrentUserData = async () => {
@@ -74,6 +77,15 @@ export const postMeme = async (data) => {
 
 export const postMemeUpdate = async (id, data) => {
   const response = await http.post(`${MEME_DEFAULT}/${id}`, data);
+  const { status, meme } = response.data;
+  if (status) {
+    return meme;
+  }
+  return null;
+};
+
+export const postMemeReaction = async (id, data) => {
+  const response = await http.post(`${MEME_VOTE}/${id}`, data);
   const { status, meme } = response.data;
   if (status) {
     return meme;
