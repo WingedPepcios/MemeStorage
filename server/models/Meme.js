@@ -31,6 +31,10 @@ const Meme = new Schema({
       default: 0,
     },
   },
+  disabledFromStats: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 mongoose.model('meme', Meme);

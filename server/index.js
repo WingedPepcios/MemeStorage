@@ -15,6 +15,8 @@ require('./services/passport');
 const settings = require('./config');
 const users = require('./routes/users');
 const memes = require('./routes/memes');
+const { PAGE_DASHBOARD, PAGE_LOGIN, PAGE_REGISTER } = require('./templates/types').pages;
+const { PRODUCTION } = require('./templates/constants');
 // const { notFound, catchErrors } = require('./middleware/errors');
 
 const options = {
@@ -57,25 +59,25 @@ app.use(express.static(path.join(__dirname, 'data')));
 
 const { user, memeTypes } = require('./templates/types');
 
-app.get('/dashboard', (req, res, next) => {
+app.get(PAGE_DASHBOARD, (req, res, next) => {
   if (!req.user) {
-    res.redirect('/login');
+    res.redirect(PAGE_LOGIN);
   } else {
     next();
   }
 });
 
-app.get('/login', (req, res, next) => {
+app.get(PAGE_LOGIN, (req, res, next) => {
   if (req.user) {
-    res.redirect('/dashboard');
+    res.redirect(PAGE_DASHBOARD);
   } else {
     next();
   }
 });
 
-app.get('/register', (req, res, next) => {
+app.get(PAGE_REGISTER, (req, res, next) => {
   if (req.user) {
-    res.redirect('/dashboard');
+    res.redirect(PAGE_DASHBOARD);
   } else {
     next();
   }
@@ -85,7 +87,7 @@ app.use(user.USER_API, users());
 app.use(memeTypes.MEME_API, memes());
 // require('./routes/account')(app);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === PRODUCTION) {
   app.use(express.static('./client/build'));
 
   app.get('*', (req, res) => {

@@ -8,6 +8,7 @@ import {
 import {
   MEME_DEFAULT,
   MEME_VOTE,
+  MEME_SINGLE,
 } from '../Types/MemesApi';
 
 // GET
@@ -31,6 +32,15 @@ export const getUserMemes = async (user) => {
 
 export const getMemes = async () => {
   const response = await http.get(MEME_DEFAULT);
+  const { status, memes } = response.data;
+  if (status) {
+    return memes;
+  }
+  return null;
+};
+
+export const getMeme = async (id) => {
+  const response = await http.get(`${MEME_SINGLE}/${id}`);
   const { status, memes } = response.data;
   if (status) {
     return memes;
