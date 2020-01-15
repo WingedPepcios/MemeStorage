@@ -15,6 +15,10 @@ const validRegisterData = ({ email, password, passwordRepeat }) => {
     error.passwordRepeat = 'Passwords are not the same';
     isError = true;
   }
+  if (password && passwordRepeat === undefined) {
+    error.passwordRepeat = 'You need repeat password';
+    isError = true;
+  }
   return isError ? error : isError;
 };
 
