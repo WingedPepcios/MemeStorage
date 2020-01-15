@@ -32,24 +32,26 @@ const Login = () => {
   return (
     <Form classes="login__form row align-items-center flex-column" onSubmit={handleSubmit}>
       <h2 className="mb-5">Zaloguj się do systemu</h2>
-      <Input
-        name="username"
-        type="text"
-        value={username}
-        onChange={(target) => setUsername(target.value)}
-        classes="col-12 col-sm-6"
-      >
-        Login
-      </Input>
-      <Input
-        name="password"
-        type="password"
-        value={password}
-        onChange={(target) => setPassword(target.value)}
-        classes="col-12 col-sm-6"
-      >
-        Password
-      </Input>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="username"
+          type="text"
+          value={username}
+          onChange={(target) => setUsername(target.value)}
+        >
+          Login
+        </Input>
+      </div>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="password"
+          type="password"
+          value={password}
+          onChange={(target) => setPassword(target.value)}
+        >
+          Password
+        </Input>
+      </div>
       <div className="col-12 col-sm-6 form__buttons">
         <button type="submit" className="d-block btn --solid mb-4">Zaloguj</button>
         <Link to={REGISTER_PAGE}>lub załóż konto</Link>

@@ -39,7 +39,7 @@ const Header = () => {
                 {
                   user.isAdmin
                     ? (
-                      <MenuLink>
+                      <MenuLink to={PANEL_PAGE}>
                         Admin
                       </MenuLink>
                     )

@@ -12,6 +12,7 @@ import Login from './Layouts/Login';
 import Dashboard from './Layouts/Dashboard';
 import Main from './Layouts/Main';
 import Register from './Layouts/Register';
+import ModalProvider from './Components/Modal/ModalProvider';
 import {
   LOGIN_PAGE,
   PANEL_PAGE,
@@ -59,6 +60,7 @@ const MemesApp = () => {
         </Switch>
       </div>
       {/* Footer here */}
+      <ModalProvider />
     </Router>
   );
 };

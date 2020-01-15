@@ -92,3 +92,13 @@ export const postMemeReaction = async (id, data) => {
   }
   return null;
 };
+
+// DELETE
+export const deleteMeme = async (id) => {
+  const deletedMeme = await http.delete(`${MEME_DEFAULT}/${id}`);
+  const { status, response } = deletedMeme.data;
+  if (status) {
+    return response;
+  }
+  return null;
+};

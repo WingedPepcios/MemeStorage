@@ -24,26 +24,32 @@ const UserMemes = () => {
 
   return (
     <section className="user_memes">
-      <div className="headline">Memy użytkownika</div>
       {
         userMemes
-          ? userMemes.map((meme) => {
-            const {
-              _id,
-              url,
-              title,
-              memePrivileges,
-            } = meme;
-            return (
-              <UserMeme
-                key={_id}
-                id={_id}
-                url={url}
-                title={title}
-                memePrivileges={memePrivileges}
-              />
-            );
-          })
+          ? (
+            <>
+              <div className="headline">Memy użytkownika</div>
+              {userMemes.map((meme) => {
+                const {
+                  _id,
+                  url,
+                  title,
+                  memePrivileges,
+                  reactions,
+                } = meme;
+                return (
+                  <UserMeme
+                    key={_id}
+                    id={_id}
+                    url={url}
+                    title={title}
+                    memePrivileges={memePrivileges}
+                    reactions={reactions}
+                  />
+                );
+              })}
+            </>
+          )
           : null
       }
     </section>

@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import useModal from '../../Utils/useModal';
 
 import Form from '../Form';
 import { Input } from '../Input';
-import { postMemeUpdate } from '../../Actions';
+import { postMemeUpdate, deleteMeme } from '../../Actions';
 
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 
@@ -14,9 +15,11 @@ const UserMeme = ({
   url,
   memePrivileges,
   title,
+  reactions,
 }) => {
   const [priviligesState, setPriviligesState] = useState(memePrivileges.toString());
   const [titleState, setTitleState] = useState(title);
+  const [deleted, setDeleted] = useState(false);
   const { user } = useSelector((state) => state);
 
   const updateMeme = () => {
@@ -24,6 +27,13 @@ const UserMeme = ({
       title: titleState,
       setPrivileges: priviligesState,
     });
+  };
+
+  const removeMeme = async (argID) => {
+    const response = await deleteMeme(argID);
+    if (response) {
+      setDeleted(true);
+    }
   };
 
   const showPrivilegesData = () => {
@@ -73,41 +83,75 @@ const UserMeme = ({
     return privileges;
   };
 
+  const dispatchModal = useModal(removeMeme, id);
+
   return (
-    <Form classes="user_meme row">
-      <div className="col-12 col-sm-6">
-        <figure className="user_meme__image">
-          <LazyLoadImage
-            alt={titleState}
-            src={url}
-            effect="opacity"
-          />
-        </figure>
-      </div>
-      <div className="col-12 col-sm-6">
-        <Input
-          name="title"
-          type="text"
-          value={titleState}
-          onChange={(target) => setTitleState(target.value)}
-          autoComplete="off"
-        >
-          Nagłówek mema
-        </Input>
-        {
-          user && user.privileges
-            ? (
-              <div className="form__group_radio">
-                <div className="headline">
-                  { showPrivilegesData() }
+    <>
+      {
+        !deleted
+          ? (
+            <Form classes="user_meme row">
+              <div className="col-12 col-sm-6 mb-5 mb-sm-0">
+                <figure className="user_meme__image mb-3">
+                  <LazyLoadImage
+                    alt={titleState}
+                    src={url}
+                    effect="opacity"
+                  />
+                </figure>
+                <div className="d-flex align-items-center justify-content-start">
+                  <div className="reaction d-flex align-items-center --positive">
+                    <span className="reaction__icon"><i className="far fa-laugh-squint" /></span>
+                    <div className="reaction__desc">
+                      <div className="reaction__value">{reactions.positive}</div>
+                      <span className="reaction__name">stonks</span>
+                    </div>
+                  </div>
+                  <div className="reaction d-flex align-items-center --negative">
+                    <span className="reaction__icon"><i className="far fa-tired" /></span>
+                    <div className="reaction__desc">
+                      <div className="reaction__value">{reactions.negative}</div>
+                      <span className="reaction__name">not stonks</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            )
-            : null
-        }
-        <button type="button" className="btn --solid" onClick={() => updateMeme()}>Aktualizuj!</button>
-      </div>
-    </Form>
+              <div className="col-12 col-sm-6">
+                <Input
+                  name="title"
+                  type="text"
+                  value={titleState}
+                  onChange={(target) => setTitleState(target.value)}
+                  autoComplete="off"
+                >
+                  Nagłówek mema
+                </Input>
+                {
+                  user && user.privileges
+                    ? (
+                      <div className="form__group_radio">
+                        <div className="headline">
+                          { showPrivilegesData() }
+                        </div>
+                      </div>
+                    )
+                    : null
+                }
+                <div className="d-flex align-items-center">
+                  <button type="button" className="btn --solid" onClick={() => updateMeme()}>
+                    Aktualizuj!
+                  </button>
+                  <button type="button" className="btn --danger ml-5" onClick={() => dispatchModal()}>
+                    <i className="fas fa-times" />
+                    <span className="ml-2">Usuń mem</span>
+                  </button>
+                </div>
+              </div>
+            </Form>
+          )
+          : null
+      }
+    </>
   );
 };
 

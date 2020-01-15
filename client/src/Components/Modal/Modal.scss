@@ -1,0 +1,50 @@
+@import '../../Styles/variables';
+
+.modal {
+  position: fixed;
+  z-index: 199;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  background-color: $background_bright;
+
+  @media (min-width: 757px) {
+    width: 380px;
+  }
+
+  &__description {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  &__action {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem;
+  
+    button {
+      margin: 0 1.5rem;
+      padding: 12px 35px;
+    }
+  }
+}
+
+.modals {
+  &:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background: #000;
+    opacity: .45;
+    z-index: 190;
+  }
+  &:empty {
+    &:after {
+      display: none;
+    }
+  }
+}

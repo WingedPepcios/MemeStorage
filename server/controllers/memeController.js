@@ -32,6 +32,10 @@ module.exports = {
     const { id } = req.params;
     const meme = await Meme.findOne({ _id: id });
 
+    if (!meme) {
+      return res.status(404).send({ status: 0, message: 'Meme not found!' });
+    }
+
     if (JSON.stringify(meme.authorId) !== JSON.stringify(req.user._id)) {
       return res.status(401).send({ status: 0, message: 'Access Denied!' });
     }
