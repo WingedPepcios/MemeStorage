@@ -3,3 +3,5 @@ export const LOGIN_PAGE = '/login';
 export const REGISTER_PAGE = '/register';
 export const PANEL_PAGE = '/dashboard';
 export const MEME_PAGE = '/:id';
+export const SETTINGS_PAGE = '/settings';
+export const ADMIN_PAGE = '/admin';

@@ -68,7 +68,7 @@ const Meme = ({
             </span>
           </div>
         ) : null}
-        <figure className="p-5 d-flex justify-content-center">
+        <figure className="p-3 p-sm-5 d-flex justify-content-center">
           <LazyLoadImage
             alt={title}
             src={url}

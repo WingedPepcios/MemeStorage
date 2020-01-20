@@ -105,6 +105,7 @@ const Uploader = () => {
 
   return (
     <Form classes="uploader row" onSubmit={handleSubmit}>
+      <div className="col-12 headline">Dodaj Mem</div>
       <div className="col-12 col-sm-6">
         <Input
           name="title"

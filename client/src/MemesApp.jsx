@@ -12,12 +12,15 @@ import Login from './Layouts/Login';
 import Dashboard from './Layouts/Dashboard';
 import Main from './Layouts/Main';
 import Register from './Layouts/Register';
+import Settings from './Layouts/Settings';
+import ModalProvider from './Components/Modal/ModalProvider';
 import {
   LOGIN_PAGE,
   PANEL_PAGE,
   DEFAULT_PAGE,
   REGISTER_PAGE,
   MEME_PAGE,
+  SETTINGS_PAGE,
 } from './Types/Routes';
 import { dispatchUserData } from './Actions/Dispatch';
 
@@ -45,15 +48,18 @@ const MemesApp = () => {
                 : <Login />
             }
           </Route>
-          <Route path={PANEL_PAGE}>
-            <Dashboard />
-          </Route>
           <Route path={REGISTER_PAGE}>
             {
               user
                 ? <Redirect to={PANEL_PAGE} />
                 : <Register />
             }
+          </Route>
+          <Route path={PANEL_PAGE}>
+            <Dashboard />
+          </Route>
+          <Route path={SETTINGS_PAGE}>
+            <Settings />
           </Route>
           <Route exact path={DEFAULT_PAGE}>
             <Main />
@@ -64,6 +70,7 @@ const MemesApp = () => {
         </Switch>
       </div>
       {/* Footer here */}
+      <ModalProvider />
     </Router>
   );
 };

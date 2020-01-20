@@ -4,16 +4,25 @@
   margin-bottom: 5rem;
   &__image {
     background-color: $background_bright;
-    height: 100%;
     padding: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+  .btn.--danger {
+    display: flex;
+    align-items: center;
+    
+    i {
+      color: red;
+      font-size: 2rem;
+    }
+  }
 }
 
 .user_memes {
   .headline {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 }

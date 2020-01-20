@@ -4,6 +4,21 @@
   display: flex;
   align-self: stretch;
   align-items: stretch;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background-color: $background_bright;
+  border-top: 2px solid $background;
+  overflow: auto;
+
+  @media (min-width: 757px) {
+    position: static;
+    background-color: transparent;
+    border: none;
+  }
 
   &__link {
     display: flex;
@@ -12,6 +27,7 @@
     padding-right: 1.5rem;
     text-decoration: none;
     position: relative;
+    height: 40px;
 
     &:after {
       content: '';

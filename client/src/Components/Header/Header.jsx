@@ -9,6 +9,8 @@ import {
   REGISTER_PAGE,
   DEFAULT_PAGE,
   PANEL_PAGE,
+  SETTINGS_PAGE,
+  ADMIN_PAGE,
 } from '../../Types/Routes';
 import { logoutUser } from '../../Actions/Dispatch';
 import './Header.scss';
@@ -36,10 +38,13 @@ const Header = () => {
                 <MenuLink to={PANEL_PAGE}>
                   Dashboard
                 </MenuLink>
+                <MenuLink to={SETTINGS_PAGE}>
+                  Ustawienia
+                </MenuLink>
                 {
                   user.isAdmin
                     ? (
-                      <MenuLink>
+                      <MenuLink to={ADMIN_PAGE}>
                         Admin
                       </MenuLink>
                     )

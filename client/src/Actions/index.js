@@ -85,6 +85,15 @@ export const postRegisterUser = async ({ username, password, repeatPassword }) =
   return { error: message };
 };
 
+export const postUpdateUser = async ({ password, passwordRepeat, username }) => {
+  const response = await http.post(`${USER_DEFAULT}/${username}`, { password, passwordRepeat });
+  const { status, message } = response.data;
+  if (status) {
+    return message;
+  }
+  return null;
+};
+
 export const postMeme = async (data) => {
   const response = await http.post(MEME_DEFAULT, data);
   const { status, meme } = response.data;
@@ -108,6 +117,16 @@ export const postMemeReaction = async (id, data) => {
   const { status, meme } = response.data;
   if (status) {
     return meme;
+  }
+  return null;
+};
+
+// DELETE
+export const deleteMeme = async (id) => {
+  const deletedMeme = await http.delete(`${MEME_DEFAULT}/${id}`);
+  const { status, response } = deletedMeme.data;
+  if (status) {
+    return response;
   }
   return null;
 };
