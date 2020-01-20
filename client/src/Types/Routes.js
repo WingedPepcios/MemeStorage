@@ -5,3 +5,4 @@ export const PANEL_PAGE = '/dashboard';
 export const MEME_PAGE = '/meme';
 export const SETTINGS_PAGE = '/settings';
 export const ADMIN_PAGE = '/admin';
+export const PAGINATION = '/page';

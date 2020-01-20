@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -15,22 +15,25 @@ const SingleMeme = () => {
   const { user } = useSelector((state) => state);
   const { id } = useParams();
 
-  const getAsyncData = async () => {
-    const response = await getMeme(id);
-    const reactions = await getMemeReactions(id);
-    if (response) {
-      setSingleMeme(response);
-    }
-    if (reactions) {
-      setSingleMemeReaction(reactions);
-    }
-  };
+  const getAsyncData = useCallback(
+    async () => {
+      const response = await getMeme(id);
+      const reactions = await getMemeReactions(id);
+      if (response) {
+        setSingleMeme(response);
+      }
+      if (reactions) {
+        setSingleMemeReaction(reactions);
+      }
+    },
+    [id],
+  );
 
   useEffect(() => {
     if (id) {
       getAsyncData();
     }
-  }, [id]);
+  }, [id, getAsyncData]);
 
   return (
     <section className="meme__wrapper">
