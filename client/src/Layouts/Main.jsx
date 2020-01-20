@@ -1,20 +1,23 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { Meme } from '../Components/Meme';
 import { Reactions } from '../Components/Reaction';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
+import { Pagination } from '../Components/Pagination';
 
 const Main = () => {
   const { memes } = useSelector((state) => state);
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const { page } = useParams();
 
   useEffect(() => {
-    dispatch(dispatchMemes());
-  }, [dispatch]);
+    dispatch(dispatchMemes(page));
+  }, [dispatch, page]);
 
   return (
     <div className="row">
@@ -50,6 +53,7 @@ const Main = () => {
               </div>
             );
           })}
+          <Pagination />
         </div>
       ) : null}
       <aside className="memes_filters col-12 col-3">

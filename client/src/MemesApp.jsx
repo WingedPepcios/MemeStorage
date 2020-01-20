@@ -23,6 +23,7 @@ import {
   REGISTER_PAGE,
   MEME_PAGE,
   SETTINGS_PAGE,
+  PAGINATION,
 } from './Types/Routes';
 import { dispatchUserData } from './Actions/Dispatch';
 
@@ -66,6 +67,9 @@ const MemesApp = () => {
             <SingleMeme />
           </Route>
           <Route exact path={DEFAULT_PAGE}>
+            <Main />
+          </Route>
+          <Route path={`${PAGINATION}/:page`}>
             <Main />
           </Route>
         </Switch>
