@@ -6,6 +6,8 @@ import useModal from '../../Utils/useModal';
 
 import Form from '../Form';
 import { Input } from '../Input';
+import { Reactions } from '../Reaction';
+
 import { postMemeUpdate, deleteMeme } from '../../Actions';
 
 import 'react-lazy-load-image-component/src/effects/opacity.css';
@@ -99,22 +101,11 @@ const UserMeme = ({
                     effect="opacity"
                   />
                 </figure>
-                <div className="d-flex align-items-center justify-content-start">
-                  <div className="reaction d-flex align-items-center --positive">
-                    <span className="reaction__icon"><i className="far fa-laugh-squint" /></span>
-                    <div className="reaction__desc">
-                      <div className="reaction__value">{reactions.positive}</div>
-                      <span className="reaction__name">stonks</span>
-                    </div>
-                  </div>
-                  <div className="reaction d-flex align-items-center --negative">
-                    <span className="reaction__icon"><i className="far fa-tired" /></span>
-                    <div className="reaction__desc">
-                      <div className="reaction__value">{reactions.negative}</div>
-                      <span className="reaction__name">not stonks</span>
-                    </div>
-                  </div>
-                </div>
+                <Reactions
+                  id={id}
+                  positive={reactions.positive}
+                  negative={reactions.negative}
+                />
               </div>
               <div className="col-12 col-sm-6">
                 <Input
