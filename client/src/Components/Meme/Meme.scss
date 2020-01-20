@@ -3,6 +3,11 @@
 .meme {
   &__title {
     font-size: 2.4rem;
+
+    a {
+      text-decoration: none;
+      font-weight: 600;
+    }
   }
   &__image {
     background-color: $background_bright;
@@ -62,6 +67,11 @@
       .reaction__icon {
         color: $color_danger
       }
+    }
+  }
+  &__stonkser {
+    &:not(:last-child):after {
+      content: ', ';
     }
   }
 }

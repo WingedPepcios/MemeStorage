@@ -11,6 +11,7 @@ const {
 } = require('../controllers/memeController');
 const {
   addReaction,
+  getMemeReactionUsers,
 } = require('../controllers/reactionController');
 const {
   MEME_DEFAULT,
@@ -37,6 +38,9 @@ module.exports = () => {
 
   // GET /meme/:id
   api.get(MEME_ONE_BY_ID, findOne);
+
+  // GET /vote/:id
+  api.get(MEME_VOTE, requireLogin, getMemeReactionUsers);
 
   // POST
   api.post(MEME_BY_ID, requireLogin, updateMeme);

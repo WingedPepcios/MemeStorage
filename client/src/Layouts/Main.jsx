@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Meme } from '../Components/Meme';
 import { dispatchMemes } from '../Actions/Dispatch';
+import getStringFromDate from '../Utils/StringFromDate';
 
 const Main = () => {
   const { memes } = useSelector((state) => state);
@@ -13,21 +14,6 @@ const Main = () => {
   useEffect(() => {
     dispatch(dispatchMemes());
   }, [dispatch]);
-
-  const getStringFromDate = (date) => {
-    const today = new Date(date);
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-
-    const yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = `0${dd}`;
-    }
-    if (mm < 10) {
-      mm = `0${mm}`;
-    }
-    return `${dd}.${mm}.${yyyy}`;
-  };
 
   return (
     <div className="row">
@@ -54,6 +40,7 @@ const Main = () => {
                 labels={memePrivileges}
                 reactions={reactions}
                 isUser={!user === false}
+                isLinked
               />
             );
           })}

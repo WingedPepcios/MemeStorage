@@ -41,9 +41,18 @@ export const getMemes = async () => {
 
 export const getMeme = async (id) => {
   const response = await http.get(`${MEME_SINGLE}/${id}`);
-  const { status, memes } = response.data;
+  const { status, meme } = response.data;
   if (status) {
-    return memes;
+    return meme;
+  }
+  return null;
+};
+
+export const getMemeReactions = async (id) => {
+  const response = await http.get(`${MEME_VOTE}/${id}`);
+  const { status, users } = response.data;
+  if (status) {
+    return users;
   }
   return null;
 };

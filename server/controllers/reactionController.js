@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const Reaction = mongoose.model('reaction');
 const Meme = mongoose.model('meme');
+const User = mongoose.model('user');
 
 module.exports = {
   addReaction: async (req, res) => {
@@ -56,4 +57,19 @@ module.exports = {
     return res.status(200).send({ status: 1, meme: responseExitMeme });
   },
   countReactions: async () => {},
+  getMemeReactionUsers: async (req, res) => {
+    const { id } = req.params;
+    const { reaction } = req.body;
+
+    const reactionUsers = await Reaction.find({ meme: id, reaction: reaction || 'stonks' }, { user: 1, _id: 0 });
+    if (!reactionUsers.length) {
+      return res.status(404).send({ status: 0, message: 'There is no reactions!' });
+    }
+    const userToFind = reactionUsers.map((user) => mongoose.Types.ObjectId(user.user));
+    const usersResponse = await User.find({ _id: { $in: userToFind } });
+
+    const users = usersResponse.map((user) => ({ username: user.username }));
+
+    return res.status(200).send({ status: 1, users });
+  },
 };
