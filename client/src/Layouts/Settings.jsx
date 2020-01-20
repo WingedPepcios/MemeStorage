@@ -20,7 +20,7 @@ const Settings = () => {
         setPasswordRepeat('');
       }
     },
-    [password, passwordRepeat],
+    [password, passwordRepeat, user],
   );
 
   return (
