@@ -50,6 +50,7 @@ module.exports = {
   },
   findAll: async (req, res) => {
     const { user } = req.params;
+    const { page } = req.query;
     const privileges = req.user ? req.user.privileges : 0;
     const filter = {
       memePrivileges: { $lte: privileges },
@@ -57,21 +58,55 @@ module.exports = {
     if (user) {
       filter.author = user;
     }
-    const memes = await Meme.find(filter, {
-      _id: 1,
-      url: 1,
-      author: 1,
-      title: 1,
-      date: 1,
-      memePrivileges: 1,
-      reactions: 1,
-    }, { sort: { date: -1 } });
+    // const memes = await Meme.find(filter, {
+    //   _id: 1,
+    //   url: 1,
+    //   author: 1,
+    //   title: 1,
+    //   date: 1,
+    //   memePrivileges: 1,
+    //   reactions: 1,
+    // }, { sort: { date: -1 } });
 
-    if (!memes.length) {
+    const options = {
+      limit: 20,
+      page: page || 1,
+      sort: { date: -1 },
+      select: {
+        _id: 1,
+        url: 1,
+        author: 1,
+        title: 1,
+        date: 1,
+        memePrivileges: 1,
+        reactions: 1,
+      },
+    };
+
+    const memes = await Meme.paginate(filter, options);
+
+    if (!memes.docs.length) {
       return res.status(404).send({ status: 0, message: 'Ups! There is no meme for you' });
     }
+    const {
+      docs,
+      totalDocs,
+      totalPages,
+      nextPage,
+      prevPage,
+    } = memes;
 
-    return res.status(200).send({ status: 1, memes });
+    return res.status(200).send({
+      status: 1,
+      memes: docs,
+      pagination: {
+        count: totalDocs,
+        total: totalPages,
+        next: nextPage,
+        prev: prevPage,
+        page: memes.page,
+      },
+    });
   },
   findOne: async (req, res) => {
     const { id } = req.params;

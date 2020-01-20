@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -36,5 +37,7 @@ const Meme = new Schema({
     default: false,
   },
 });
+
+Meme.plugin(mongoosePaginate);
 
 mongoose.model('meme', Meme);
