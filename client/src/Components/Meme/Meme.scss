@@ -41,6 +41,11 @@
   &__reactions {
     margin-top: 5px;
   }
+  &__stonkser {
+    &:not(:last-child):after {
+      content: ', ';
+    }
+  }
 }
 .reaction {
   text-align: left;
@@ -67,11 +72,6 @@
   &.--negative {
     .reaction__icon {
       color: $color_danger
-    }
-  }
-  &__stonkser {
-    &:not(:last-child):after {
-      content: ', ';
     }
   }
 }
