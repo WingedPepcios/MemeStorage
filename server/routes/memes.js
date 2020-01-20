@@ -7,15 +7,18 @@ const {
   removeMeme,
   findAll,
   updateMeme,
+  findOne,
 } = require('../controllers/memeController');
 const {
   addReaction,
+  getMemeReactionUsers,
 } = require('../controllers/reactionController');
 const {
   MEME_DEFAULT,
   MEME_BY_ID,
   MEME_BY_USER,
   MEME_VOTE,
+  MEME_ONE_BY_ID,
 } = require('../templates/types/memeTypes');
 
 module.exports = () => {
@@ -30,8 +33,14 @@ module.exports = () => {
   // GET /
   api.get(MEME_DEFAULT, findAll);
 
-  // GET //:user
+  // GET /:user
   api.get(MEME_BY_USER, requireLogin, findAll);
+
+  // GET /meme/:id
+  api.get(MEME_ONE_BY_ID, findOne);
+
+  // GET /vote/:id
+  api.get(MEME_VOTE, requireLogin, getMemeReactionUsers);
 
   // POST
   api.post(MEME_BY_ID, requireLogin, updateMeme);

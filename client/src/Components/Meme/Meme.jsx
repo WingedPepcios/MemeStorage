@@ -1,10 +1,11 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { postMemeReaction } from '../../Actions';
-
+import { DEFAULT_PAGE } from '../../Types/Routes';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './Meme.scss';
 
@@ -17,6 +18,7 @@ const Meme = ({
   labels,
   reactions,
   isUser,
+  isLinked,
 }) => {
   const [stonks, setStonks] = useState(reactions.positive);
   const [notStonks, setNotStonks] = useState(reactions.negative);
@@ -33,7 +35,17 @@ const Meme = ({
   return (
     <section className="meme mb-5">
       <div className="meme__description mb-3">
-        <div className="meme__title mb-2"><strong>{title}</strong></div>
+        <div className="meme__title mb-2">
+          {
+            isLinked
+              ? (
+                <Link to={`${DEFAULT_PAGE}${id}`}>{title}</Link>
+              )
+              : (
+                <strong>{title}</strong>
+              )
+          }
+        </div>
         <div className="meme__bottom">
           <i className="meme__date mr-3">{date}</i>
           <span className="meme__author">
