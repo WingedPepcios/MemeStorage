@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Meme } from '../Components/Meme';
+import { Reactions } from '../Components/Reaction';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
 
@@ -30,18 +31,23 @@ const Main = () => {
               reactions,
             } = meme;
             return (
-              <Meme
-                key={_id}
-                id={_id}
-                author={author}
-                url={url}
-                title={title}
-                date={getStringFromDate(date)}
-                labels={memePrivileges}
-                reactions={reactions}
-                isUser={!user === false}
-                isLinked
-              />
+              <div key={_id} className="mb-5">
+                <Meme
+                  id={_id}
+                  author={author}
+                  url={url}
+                  title={title}
+                  date={getStringFromDate(date)}
+                  labels={memePrivileges}
+                  isLinked
+                />
+                <Reactions
+                  id={_id}
+                  positive={reactions.positive}
+                  negative={reactions.negative}
+                  clickable={user}
+                />
+              </div>
             );
           })}
         </div>
