@@ -12,7 +12,7 @@ import { LOGIN_PAGE } from '../Types/Routes';
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
 
   const dispatch = useDispatch();
 
@@ -22,13 +22,13 @@ const Register = () => {
       const userData = await postRegisterUser({
         username,
         password,
-        repeatPassword,
+        passwordRepeat,
       });
       if (!userData.error) {
         dispatch({ type: SET_USER_DATA, payload: userData });
       }
     },
-    [username, password, repeatPassword, dispatch],
+    [username, password, passwordRepeat, dispatch],
   );
 
   return (
@@ -44,10 +44,10 @@ const Register = () => {
         Login
       </Input>
       <Input
-        name="repeatPassword"
+        name="passwordRepeat"
         type="password"
-        value={repeatPassword}
-        onChange={(target) => setRepeatPassword(target.value)}
+        value={passwordRepeat}
+        onChange={(target) => setPasswordRepeat(target.value)}
         classes="col-12 col-sm-6"
         minLength="10"
       >

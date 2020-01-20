@@ -76,8 +76,8 @@ export const postLoginUser = async ({ username, password }) => {
   return { error: message };
 };
 
-export const postRegisterUser = async ({ username, password, repeatPassword }) => {
-  const response = await http.post(USER_REGISTER, { username, password, repeatPassword });
+export const postRegisterUser = async ({ username, password, passwordRepeat }) => {
+  const response = await http.post(USER_REGISTER, { username, password, passwordRepeat });
   const { status, user, message } = response.data;
   if (status) {
     return user;
