@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 
+require('./models/Tag');
 require('./models/User');
 require('./models/Meme');
 require('./models/Reaction');
