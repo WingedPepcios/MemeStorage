@@ -1,0 +1,20 @@
+@import '../../Styles/variables';
+
+.labels {
+  &__finder {
+    position: relative;
+  }
+  &__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    list-style: none;
+    padding: 1.5rem;
+    background-color: $background_bright;
+    border: 2px solid $color_gray;
+    border-top: none;
+    box-shadow: 0 2px 5px 0 $color_decorate;
+  }
+}

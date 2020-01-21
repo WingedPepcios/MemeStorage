@@ -11,6 +11,7 @@ import { Input } from '../Input';
 import { postMeme } from '../../Actions';
 
 import './Uploader.scss';
+import { Labels } from '../Label';
 
 const Uploader = () => {
   const [memePrivileges, setMemePrivileges] = useState('0');
@@ -104,7 +105,7 @@ const Uploader = () => {
   };
 
   return (
-    <Form classes="uploader row" onSubmit={handleSubmit}>
+    <Form classes="uploader row mx-0 py-4" onSubmit={handleSubmit}>
       <div className="col-12 headline">Dodaj Mem</div>
       <div className="col-12 col-sm-6">
         <Input
@@ -116,14 +117,7 @@ const Uploader = () => {
         >
           Nagłówek mema
         </Input>
-        <Input
-          name="tags"
-          type="text"
-          autoComplete="off"
-          disabled
-        >
-          Tagi (wkrótce)
-        </Input>
+        <Labels />
         {
           user && user.privileges
             ? (

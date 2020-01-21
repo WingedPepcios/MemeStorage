@@ -10,6 +10,9 @@ import {
   MEME_VOTE,
   MEME_SINGLE,
 } from '../Types/MemesApi';
+import {
+  LABEL_DEFAULT,
+} from '../Types/LabelsApi';
 
 // GET
 export const getCurrentUserData = async () => {
@@ -66,6 +69,15 @@ export const logoutUserFunction = async () => {
   return null;
 };
 
+export const getLabels = async (name) => {
+  const response = await http.get(`${LABEL_DEFAULT}/${name}`);
+  const { status, labels } = response.data;
+  if (status) {
+    return labels;
+  }
+  return null;
+};
+
 // POST
 export const postLoginUser = async ({ username, password }) => {
   const response = await http.post(USER_DEFAULT, { username, password });
@@ -117,6 +129,15 @@ export const postMemeReaction = async (id, data) => {
   const { status, meme } = response.data;
   if (status) {
     return meme;
+  }
+  return null;
+};
+
+export const postLabels = async (name) => {
+  const response = await http.post(LABEL_DEFAULT, { label: name });
+  const { status, labels } = response.data;
+  if (status) {
+    return labels;
   }
   return null;
 };

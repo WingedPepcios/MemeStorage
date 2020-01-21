@@ -16,6 +16,7 @@ require('./services/passport');
 const settings = require('./config');
 const users = require('./routes/users');
 const memes = require('./routes/memes');
+const tags = require('./routes/labels');
 const { PAGE_DASHBOARD, PAGE_LOGIN, PAGE_REGISTER } = require('./templates/types').pages;
 const { PRODUCTION } = require('./templates/constants');
 // const { notFound, catchErrors } = require('./middleware/errors');
@@ -58,7 +59,7 @@ app.use(express.static(path.join(__dirname, 'data')));
 // app.use(notFound);
 // app.use(catchErrors);
 
-const { user, memeTypes } = require('./templates/types');
+const { user, memeTypes, labels } = require('./templates/types');
 
 app.get(PAGE_DASHBOARD, (req, res, next) => {
   if (!req.user) {
@@ -86,6 +87,7 @@ app.get(PAGE_REGISTER, (req, res, next) => {
 
 app.use(user.USER_API, users());
 app.use(memeTypes.MEME_API, memes());
+app.use(labels.LABEL_API, tags());
 // require('./routes/account')(app);
 
 if (process.env.NODE_ENV === PRODUCTION) {
