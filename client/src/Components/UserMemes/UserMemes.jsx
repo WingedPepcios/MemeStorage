@@ -36,6 +36,7 @@ const UserMemes = () => {
                   title,
                   memePrivileges,
                   reactions,
+                  tags,
                 } = meme;
                 return (
                   <UserMeme
@@ -45,6 +46,7 @@ const UserMemes = () => {
                     title={title}
                     memePrivileges={memePrivileges}
                     reactions={reactions}
+                    tags={tags}
                   />
                 );
               })}

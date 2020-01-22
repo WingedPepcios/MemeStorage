@@ -50,6 +50,7 @@ const SingleMeme = () => {
                 date={getStringFromDate(singleMeme.date)}
                 labels={singleMeme.memePrivileges}
                 isUser={!user === false}
+                tags={singleMeme.tags}
               />
               <Reactions
                 id={singleMeme._id}

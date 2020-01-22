@@ -10,7 +10,7 @@ module.exports = {
   addMeme: async (req, res) => {
     const { path } = req.file;
     const { _id, privileges, username } = req.user;
-    const { title, setPrivileges } = req.body;
+    const { title, setPrivileges, tags } = req.body;
 
     const data = {};
     if (title) {
@@ -18,6 +18,9 @@ module.exports = {
     }
     if (setPrivileges && privileges >= setPrivileges) {
       data.memePrivileges = setPrivileges;
+    }
+    if (tags) {
+      data.tags = JSON.parse(tags);
     }
 
     const newMeme = await new Meme({
@@ -58,15 +61,6 @@ module.exports = {
     if (user) {
       filter.author = user;
     }
-    // const memes = await Meme.find(filter, {
-    //   _id: 1,
-    //   url: 1,
-    //   author: 1,
-    //   title: 1,
-    //   date: 1,
-    //   memePrivileges: 1,
-    //   reactions: 1,
-    // }, { sort: { date: -1 } });
 
     const options = {
       limit: 20,
@@ -80,6 +74,7 @@ module.exports = {
         date: 1,
         memePrivileges: 1,
         reactions: 1,
+        tags: 1,
       },
     };
 
@@ -130,9 +125,10 @@ module.exports = {
       return res.status(401).send({ status: 0, message: 'Access Denied!' });
     }
 
-    const { title, setPrivileges } = req.body;
+    const { title, setPrivileges, tags } = req.body;
     if (title) meme.title = title;
     if (setPrivileges) meme.memePrivileges = setPrivileges;
+    if (tags) meme.tags = tags;
 
     const response = await meme.save();
     if (!response) {

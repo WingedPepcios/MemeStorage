@@ -16,7 +16,13 @@ const Meme = new Schema({
     type: String,
     default: 'Default name',
   },
-  tags: [],
+  tags: [{
+    name: String,
+    id: {
+      type: Schema.ObjectId,
+      ref: 'Tag',
+    },
+  }],
   date: {
     type: Date,
     required: true,

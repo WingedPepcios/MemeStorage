@@ -16,6 +16,7 @@ const Meme = ({
   date,
   labels,
   isLinked,
+  tags,
 }) => (
   <section className="meme mb-3">
     <div className="meme__description mb-3">
@@ -38,7 +39,7 @@ const Meme = ({
         </span>
       </div>
     </div>
-    <div className={`meme__image ${labels ? 'meme__danger' : null}`}>
+    <div className={`meme__image ${labels ? 'meme__danger' : ''}`}>
       {labels ? (
         <div className={`meme__label d-flex justify-content-start security_${labels}`}>
           <span>
@@ -73,6 +74,17 @@ const Meme = ({
             )
         }
       </figure>
+      {
+        tags && tags.length
+          ? (
+            <div className="meme__tags">
+              {
+                tags.map((label) => <span key={label.id} className="meme__tag">{label.name}</span>)
+              }
+            </div>
+          )
+          : null
+      }
     </div>
   </section>
 );

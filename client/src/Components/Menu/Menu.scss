@@ -14,7 +14,7 @@
   border-top: 2px solid $background;
   overflow: auto;
 
-  @media (min-width: 757px) {
+  @media (min-width: 979px) {
     position: static;
     background-color: transparent;
     border: none;
@@ -27,13 +27,14 @@
     padding-right: 1.5rem;
     text-decoration: none;
     position: relative;
-    height: 40px;
+    height: 60px;
+    text-transform: uppercase;
 
     &:after {
       content: '';
       width: 0;
       transition: width .3s;
-      height: 3px;
+      height: 6px;
       background-color: $color_primary;
       bottom: 0;
       left: 0;
