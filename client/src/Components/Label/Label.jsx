@@ -7,10 +7,10 @@ const Label = ({
   onClick,
 }) => (
   <span className="label">
-    {children}
+    <span>{children}</span>
     {
       onClick
-        ? <button type="button" className="ml-3"><i className="fas fa-times" /></button>
+        ? <button type="button" onClick={onClick}><i className="fas fa-times" /></button>
         : null
     }
   </span>

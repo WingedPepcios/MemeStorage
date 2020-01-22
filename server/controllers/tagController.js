@@ -15,7 +15,6 @@ module.exports = {
   },
   addTag: async (req, res) => {
     const { label } = req.body;
-    console.log(req.body);
     if (!label) {
       return res.status(200).send({ status: 0, message: 'Name cannot be empty!' });
     }

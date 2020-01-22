@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
-const Tag = mongoose.model('tag');
 
 const Meme = new Schema({
   authorId: {
@@ -17,7 +16,13 @@ const Meme = new Schema({
     type: String,
     default: 'Default name',
   },
-  tags: [Tag.schema],
+  tags: [{
+    name: String,
+    id: {
+      type: Schema.ObjectId,
+      ref: 'Tag',
+    },
+  }],
   date: {
     type: Date,
     required: true,

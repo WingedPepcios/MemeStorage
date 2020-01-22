@@ -11,14 +11,23 @@ import { Input } from '../Input';
 import { postMeme } from '../../Actions';
 
 import './Uploader.scss';
-import { Labels } from '../Label';
+import { useLabels } from '../Label';
 
 const Uploader = () => {
   const [memePrivileges, setMemePrivileges] = useState('0');
   const [memeTitle, setMemeTitle] = useState('');
   const [memePreview, setMemePreview] = useState('');
-  const memeRef = useRef(null);
   const { user } = useSelector((state) => state);
+  const memeRef = useRef(null);
+
+  const {
+    Labels,
+    List,
+    setList,
+  } = useLabels({
+    labels: [],
+    instance: 0,
+  });
 
   const handleChange = (target) => {
     setMemePrivileges(target.value);
@@ -32,17 +41,19 @@ const Uploader = () => {
       data.append('image', memeRef.current.files[0]);
       data.append('setPrivileges', memePrivileges);
       data.append('title', memeTitle);
+      data.append('tags', JSON.stringify(List));
 
       const response = await postMeme(data);
       if (response) {
         setMemePrivileges('0');
         setMemeTitle('');
         setMemePreview('');
+        setList([]);
         memeRef.current.value = null;
       }
       // TODO - Alerty!
     },
-    [memePrivileges, memeTitle, memeRef],
+    [memePrivileges, memeTitle, memeRef, List, setList],
   );
 
   const showPrivilegesData = () => {

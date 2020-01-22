@@ -23,4 +23,9 @@
       }
     }
   }
+  .labels {
+    &__headline {
+      background-color: $background_bright;
+    }
+  }
 }

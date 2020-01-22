@@ -1,1 +1,1 @@
-export { default as Labels } from './LabelProvider';
+export { default as useLabels } from './useLabels';

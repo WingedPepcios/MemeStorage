@@ -7,6 +7,7 @@ import useModal from '../../Utils/useModal';
 import Form from '../Form';
 import { Input } from '../Input';
 import { Reactions } from '../Reaction';
+import { useLabels } from '../Label';
 
 import { postMemeUpdate, deleteMeme } from '../../Actions';
 
@@ -18,16 +19,26 @@ const UserMeme = ({
   memePrivileges,
   title,
   reactions,
+  tags,
 }) => {
   const [priviligesState, setPriviligesState] = useState(memePrivileges.toString());
   const [titleState, setTitleState] = useState(title);
   const [deleted, setDeleted] = useState(false);
   const { user } = useSelector((state) => state);
 
+  const {
+    Labels,
+    List,
+  } = useLabels({
+    labels: tags,
+    instance: id,
+  });
+
   const updateMeme = () => {
     postMemeUpdate(id, {
       title: titleState,
       setPrivileges: priviligesState,
+      tags: List,
     });
   };
 
@@ -117,11 +128,12 @@ const UserMeme = ({
                 >
                   Nagłówek mema
                 </Input>
+                <Labels />
                 {
                   user && user.privileges
                     ? (
                       <div className="form__group_radio">
-                        <div className="headline">
+                        <div className="">
                           { showPrivilegesData() }
                         </div>
                       </div>

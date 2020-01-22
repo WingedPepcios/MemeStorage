@@ -135,9 +135,9 @@ export const postMemeReaction = async (id, data) => {
 
 export const postLabels = async (name) => {
   const response = await http.post(LABEL_DEFAULT, { label: name });
-  const { status, labels } = response.data;
+  const { status, label } = response.data;
   if (status) {
-    return labels;
+    return label;
   }
   return null;
 };

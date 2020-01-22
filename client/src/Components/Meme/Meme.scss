@@ -46,4 +46,10 @@
       content: ', ';
     }
   }
+  &__tag {
+    background-color: $color_danger;
+    padding: 6px 8px 5px;
+    display: inline-block;
+    margin-left: 10px;
+  }
 }

@@ -1,20 +1,83 @@
 @import '../../Styles/variables';
 
 .labels {
-  &__finder {
-    position: relative;
+  border: 2px solid $color_gray;
+  padding: 10px 5px;
+  position: relative;
+
+  &__headline {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    padding: 0 10px;
+    background-color: $background;
+    line-height: 20px;
+    z-index: 9;
   }
+
   &__list {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: -2px;
+    right: -2px;
     z-index: 9;
     list-style: none;
     padding: 1.5rem;
     background-color: $background_bright;
     border: 2px solid $color_gray;
-    border-top: none;
-    box-shadow: 0 2px 5px 0 $color_decorate;
+    box-shadow: 0 3px 5px 0 $color_decorate;
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+    }
+    button {
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .form__group {
+    margin-bottom: 0 !important;
+    input {
+      border: none;
+      padding: 10px;
+      height: 30px;
+    }
+  }
+  .label {
+    display: flex;
+    align-items: stretch;
+    margin: 5px;
+
+    span {
+      background-color: $color_primary;
+      color: $color_default;
+      padding: 6px 8px 5px;
+      border-radius: 5px 0 0 5px;
+
+      &:only-child {
+        border-radius: 5px;
+      }
+    }
+
+    button {
+      background-color: $color_primary;
+      color: $color_default;
+      padding: 6px 8px 5px;
+      border-radius: 0 5px 5px 0;
+      transition: background-color .3s;
+
+      &:hover {
+        background-color: $color_secondary;
+      }
+    }
   }
 }
