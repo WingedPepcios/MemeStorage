@@ -53,13 +53,26 @@ module.exports = {
   },
   findAll: async (req, res) => {
     const { user } = req.params;
-    const { page } = req.query;
+    const { page, labels, permsLevel } = req.query;
+    console.log(permsLevel);
     const privileges = req.user ? req.user.privileges : 0;
-    const filter = {
-      memePrivileges: { $lte: privileges },
-    };
+    const permissions = (
+      permsLevel
+      && permsLevel.length
+      && permsLevel.filter((lvl) => lvl <= privileges).length
+    );
+
+    const filter = {};
+    if (permissions) {
+      filter.memePrivileges = { $in: permsLevel.filter((lvl) => lvl <= privileges) };
+    } else {
+      filter.memePrivileges = { $lte: privileges };
+    }
     if (user) {
       filter.author = user;
+    }
+    if (labels && labels.length) {
+      filter.tags.name = { $in: labels };
     }
 
     const options = {
