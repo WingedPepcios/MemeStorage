@@ -1,8 +1,10 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 const pathFix = require('path');
 
 const Meme = mongoose.model('meme');
+const Tag = mongoose.model('tag');
 
 const { PAGE_MAIN } = require('../templates/types').pages;
 
@@ -54,25 +56,27 @@ module.exports = {
   findAll: async (req, res) => {
     const { user } = req.params;
     const { page, labels, permsLevel } = req.query;
-    console.log(permsLevel);
     const privileges = req.user ? req.user.privileges : 0;
+
+    const perms = permsLevel ? typeof permsLevel === 'string' ? [permsLevel] : permsLevel : [];
+    const labelsArray = labels ? typeof labels === 'string' ? [labels] : labels : [];
+
     const permissions = (
-      permsLevel
-      && permsLevel.length
-      && permsLevel.filter((lvl) => lvl <= privileges).length
+      perms
+      && perms.filter((lvl) => lvl <= privileges).length
     );
 
     const filter = {};
     if (permissions) {
-      filter.memePrivileges = { $in: permsLevel.filter((lvl) => lvl <= privileges) };
+      filter.memePrivileges = { $in: perms.filter((lvl) => lvl <= privileges) };
     } else {
       filter.memePrivileges = { $lte: privileges };
     }
     if (user) {
       filter.author = user;
     }
-    if (labels && labels.length) {
-      filter.tags.name = { $in: labels };
+    if (labelsArray && labelsArray.length) {
+      filter['tags.name'] = { $in: labelsArray };
     }
 
     const options = {
@@ -92,10 +96,12 @@ module.exports = {
     };
 
     const memes = await Meme.paginate(filter, options);
-
     if (!memes.docs.length) {
       return res.status(404).send({ status: 0, message: 'Ups! There is no meme for you' });
     }
+
+    const tags = await Tag.find({}, { name: 1, _id: 0 });
+
     const {
       docs,
       totalDocs,
@@ -104,7 +110,7 @@ module.exports = {
       prevPage,
     } = memes;
 
-    return res.status(200).send({
+    const result = {
       status: 1,
       memes: docs,
       pagination: {
@@ -114,7 +120,17 @@ module.exports = {
         prev: prevPage,
         page: memes.page,
       },
-    });
+      filters: {
+        labels: tags.map(
+          (tag) => ({
+            name: tag.name,
+            isActive: labelsArray.filter((label) => label === tag.name).length ? true : false,
+          }),
+        ),
+      },
+    };
+
+    return res.status(200).send(result);
   },
   findOne: async (req, res) => {
     const { id } = req.params;
@@ -148,5 +164,15 @@ module.exports = {
       return res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
     }
     return res.status(200).send({ status: 1, response });
+  },
+  getFilters: async (req, res) => {
+    const tags = await Tag.find({});
+
+    const filters = {};
+    if (tags && tags.length) {
+      filters.labels = tags;
+    }
+
+    return res.status(200).send({ status: 1, filters });
   },
 };

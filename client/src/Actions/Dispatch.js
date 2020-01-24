@@ -3,6 +3,7 @@ import {
   SET_MEMES_ARRAY,
   DELETE_USER_DATA,
   SET_MEMES_PAGIN,
+  SET_MEMES_FILTERS,
 } from '../Types/Reducers';
 import { getCurrentUserData, getMemes, logoutUserFunction } from './index';
 
@@ -34,10 +35,10 @@ export const logoutUser = () => async function logaoutUserPromise(dispatch) {
   }
 };
 
-export const dispatchMemes = (page) => async function dispatchMemesPromise(dispatch) {
-  const response = await getMemes(page);
+export const dispatchMemes = (page, query) => async function dispatchMemesPromise(dispatch) {
+  const response = await getMemes(page, query);
   if (response) {
-    const { memes, pagination } = response;
+    const { memes, pagination, filters } = response;
     dispatch({
       type: SET_MEMES_ARRAY,
       payload: memes,
@@ -45,6 +46,10 @@ export const dispatchMemes = (page) => async function dispatchMemesPromise(dispa
     dispatch({
       type: SET_MEMES_PAGIN,
       payload: pagination,
+    });
+    dispatch({
+      type: SET_MEMES_FILTERS,
+      payload: filters,
     });
   }
 };

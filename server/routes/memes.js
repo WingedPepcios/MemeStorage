@@ -8,6 +8,7 @@ const {
   findAll,
   updateMeme,
   findOne,
+  getFilters,
 } = require('../controllers/memeController');
 const {
   addReaction,
@@ -19,6 +20,7 @@ const {
   MEME_BY_USER,
   MEME_VOTE,
   MEME_ONE_BY_ID,
+  MEME_FILTERS,
 } = require('../templates/types/memeTypes');
 
 module.exports = () => {
@@ -33,11 +35,14 @@ module.exports = () => {
   // GET /
   api.get(MEME_DEFAULT, findAll);
 
-  // GET /:user
-  api.get(MEME_BY_USER, requireLogin, findAll);
+  // GET /filters
+  api.get(MEME_FILTERS, getFilters);
 
   // GET /meme/:id
   api.get(MEME_ONE_BY_ID, findOne);
+
+  // GET /:user
+  api.get(MEME_BY_USER, requireLogin, findAll);
 
   // GET /vote/:id
   api.get(MEME_VOTE, requireLogin, getMemeReactionUsers);

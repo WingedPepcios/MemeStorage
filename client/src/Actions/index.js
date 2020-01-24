@@ -33,11 +33,16 @@ export const getUserMemes = async (user) => {
   return null;
 };
 
-export const getMemes = async (page) => {
-  const response = await http.get(MEME_DEFAULT, { page: page || 1 });
-  const { status, memes, pagination } = response.data;
+export const getMemes = async (page, query) => {
+  const response = await http.get(MEME_DEFAULT, { page: page || 1, ...query });
+  const {
+    status,
+    memes,
+    pagination,
+    filters,
+  } = response.data;
   if (status) {
-    return { memes, pagination };
+    return { memes, pagination, filters };
   }
   return null;
 };

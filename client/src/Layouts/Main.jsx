@@ -1,26 +1,31 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 import { Meme } from '../Components/Meme';
 import { Reactions } from '../Components/Reaction';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
 import { Pagination } from '../Components/Pagination';
+import Filters from '../Components/Filters/Filters';
 
 const Main = () => {
   const { memes } = useSelector((state) => state);
+  const { filters } = useSelector((state) => state);
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
   const { page } = useParams();
+  const { search } = useLocation();
 
   useEffect(() => {
-    dispatch(dispatchMemes(page));
-  }, [dispatch, page]);
+    const query = queryString.parse(search, { arrayFormat: 'comma' });
+    dispatch(dispatchMemes(page, query));
+  }, [dispatch, page, search]);
 
   return (
-    <div className="row">
+    <div className="row align-items-start">
       {memes ? (
         <div className="memes_list col-12 col-sm-9">
           {memes.map((meme) => {
@@ -56,8 +61,8 @@ const Main = () => {
           <Pagination />
         </div>
       ) : null}
-      <aside className="memes_filters col-12 col-3">
-        {/* Filters here */}
+      <aside className="aside col-12 col-sm-3">
+        <Filters user={user} filters={filters} />
       </aside>
     </div>
   );
