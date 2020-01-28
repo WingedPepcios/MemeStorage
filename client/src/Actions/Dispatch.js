@@ -1,4 +1,9 @@
-import { SET_USER_DATA, SET_MEMES_ARRAY, DELETE_USER_DATA } from '../Types/Reducers';
+import {
+  SET_USER_DATA,
+  SET_MEMES_ARRAY,
+  DELETE_USER_DATA,
+  SET_MEMES_PAGIN,
+} from '../Types/Reducers';
 import { getCurrentUserData, getMemes, logoutUserFunction } from './index';
 
 export const dispatchUserData = () => async function dispatchUserDataPromise(dispatch) {
@@ -29,12 +34,17 @@ export const logoutUser = () => async function logaoutUserPromise(dispatch) {
   }
 };
 
-export const dispatchMemes = () => async function dispatchMemesPromise(dispatch) {
-  const response = await getMemes();
+export const dispatchMemes = (page) => async function dispatchMemesPromise(dispatch) {
+  const response = await getMemes(page);
   if (response) {
+    const { memes, pagination } = response;
     dispatch({
       type: SET_MEMES_ARRAY,
-      payload: response,
+      payload: memes,
+    });
+    dispatch({
+      type: SET_MEMES_PAGIN,
+      payload: pagination,
     });
   }
 };

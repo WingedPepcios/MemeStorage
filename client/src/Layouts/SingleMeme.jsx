@@ -1,10 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Meme } from '../Components/Meme';
+import { Reactions } from '../Components/Reaction';
 import { getMeme, getMemeReactions } from '../Actions';
 import getStringFromDate from '../Utils/StringFromDate';
 
@@ -14,21 +15,25 @@ const SingleMeme = () => {
   const { user } = useSelector((state) => state);
   const { id } = useParams();
 
-  useEffect(() => {
-    const getAsyncData = async () => {
-      if (id) {
-        const response = await getMeme(id);
-        const reactions = await getMemeReactions(id);
-        if (response) {
-          setSingleMeme(response);
-        }
-        if (reactions) {
-          setSingleMemeReaction(reactions);
-        }
+  const getAsyncData = useCallback(
+    async () => {
+      const response = await getMeme(id);
+      const reactions = await getMemeReactions(id);
+      if (response) {
+        setSingleMeme(response);
       }
-    };
-    getAsyncData();
-  }, [id]);
+      if (reactions) {
+        setSingleMemeReaction(reactions);
+      }
+    },
+    [id],
+  );
+
+  useEffect(() => {
+    if (id) {
+      getAsyncData();
+    }
+  }, [id, getAsyncData]);
 
   return (
     <section className="meme__wrapper">
@@ -44,14 +49,21 @@ const SingleMeme = () => {
                 title={singleMeme.title}
                 date={getStringFromDate(singleMeme.date)}
                 labels={singleMeme.memePrivileges}
-                reactions={singleMeme.reactions}
                 isUser={!user === false}
+                tags={singleMeme.tags}
+              />
+              <Reactions
+                id={singleMeme._id}
+                positive={singleMeme.reactions.positive}
+                negative={singleMeme.reactions.negative}
+                clickable={user}
+                callback={() => getAsyncData()}
               />
               {
                 singleMemeReaction
                   ? (
                     <div className="meme__Likes">
-                      <div>Polubili:</div>
+                      <strong>Polubili: </strong>
                       {
                         singleMemeReaction.map((userReaction, index) => <span key={index} className="meme__stonkser">{userReaction.username}</span>)
                       }

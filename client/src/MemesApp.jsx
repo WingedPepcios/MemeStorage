@@ -14,6 +14,8 @@ import Main from './Layouts/Main';
 import Register from './Layouts/Register';
 import Settings from './Layouts/Settings';
 import ModalProvider from './Components/Modal/ModalProvider';
+import SingleMeme from './Layouts/SingleMeme';
+import { Footer } from './Components/Footer';
 import {
   LOGIN_PAGE,
   PANEL_PAGE,
@@ -21,12 +23,12 @@ import {
   REGISTER_PAGE,
   MEME_PAGE,
   SETTINGS_PAGE,
+  PAGINATION,
 } from './Types/Routes';
 import { dispatchUserData } from './Actions/Dispatch';
 
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './Styles/defaults.scss';
-import SingleMeme from './Layouts/SingleMeme';
 
 const MemesApp = () => {
   const { user } = useSelector((state) => state);
@@ -61,15 +63,18 @@ const MemesApp = () => {
           <Route path={SETTINGS_PAGE}>
             <Settings />
           </Route>
+          <Route path={`${MEME_PAGE}/:id`}>
+            <SingleMeme />
+          </Route>
           <Route exact path={DEFAULT_PAGE}>
             <Main />
           </Route>
-          <Route exact path={MEME_PAGE}>
-            <SingleMeme />
+          <Route path={`${PAGINATION}/:page`}>
+            <Main />
           </Route>
         </Switch>
       </div>
-      {/* Footer here */}
+      <Footer />
       <ModalProvider />
     </Router>
   );

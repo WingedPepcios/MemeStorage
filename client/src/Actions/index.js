@@ -10,6 +10,9 @@ import {
   MEME_VOTE,
   MEME_SINGLE,
 } from '../Types/MemesApi';
+import {
+  LABEL_DEFAULT,
+} from '../Types/LabelsApi';
 
 // GET
 export const getCurrentUserData = async () => {
@@ -30,11 +33,11 @@ export const getUserMemes = async (user) => {
   return null;
 };
 
-export const getMemes = async () => {
-  const response = await http.get(MEME_DEFAULT);
-  const { status, memes } = response.data;
+export const getMemes = async (page) => {
+  const response = await http.get(MEME_DEFAULT, { page: page || 1 });
+  const { status, memes, pagination } = response.data;
   if (status) {
-    return memes;
+    return { memes, pagination };
   }
   return null;
 };
@@ -66,6 +69,15 @@ export const logoutUserFunction = async () => {
   return null;
 };
 
+export const getLabels = async (name) => {
+  const response = await http.get(`${LABEL_DEFAULT}/${name}`);
+  const { status, labels } = response.data;
+  if (status) {
+    return labels;
+  }
+  return null;
+};
+
 // POST
 export const postLoginUser = async ({ username, password }) => {
   const response = await http.post(USER_DEFAULT, { username, password });
@@ -76,8 +88,8 @@ export const postLoginUser = async ({ username, password }) => {
   return { error: message };
 };
 
-export const postRegisterUser = async ({ username, password, repeatPassword }) => {
-  const response = await http.post(USER_REGISTER, { username, password, repeatPassword });
+export const postRegisterUser = async ({ username, password, passwordRepeat }) => {
+  const response = await http.post(USER_REGISTER, { username, password, passwordRepeat });
   const { status, user, message } = response.data;
   if (status) {
     return user;
@@ -117,6 +129,15 @@ export const postMemeReaction = async (id, data) => {
   const { status, meme } = response.data;
   if (status) {
     return meme;
+  }
+  return null;
+};
+
+export const postLabels = async (name) => {
+  const response = await http.post(LABEL_DEFAULT, { label: name });
+  const { status, label } = response.data;
+  if (status) {
+    return label;
   }
   return null;
 };

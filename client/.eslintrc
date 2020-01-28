@@ -11,6 +11,7 @@
   "rules": {
       "linebreak-style": 0,
       "no-unneeded-ternary": 0,
-      "import/prefer-default-export": 0
+      "import/prefer-default-export": 0,
+      "react/prop-types": 0
   }
 }

@@ -34,6 +34,11 @@ body {
   color: $color_default;
   background-color: $background;
   overflow-x: hidden;
+  margin-bottom: 60px;
+
+  @media (min-width: 979px) {
+    margin-bottom: 0;
+  }
 }
 
 img {
@@ -82,11 +87,17 @@ button {
   color: $color_default;
   transition: all .3s;
   cursor: pointer;
+  width: 100%;
+
+  @media (min-width: 757px) {
+    width: auto;
+  }
 
   &.--solid {
     background-color: $color_primary;
     border: 1px solid $color_primary;
     padding: 12px 35px;
+    text-decoration: none;
 
     @media (min-width: 757px) {
       &:hover {
