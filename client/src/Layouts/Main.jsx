@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Meme } from '../Components/Meme';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
+import Donate from '../Components/Donate/Donate';
 
 const Main = () => {
   const { memes } = useSelector((state) => state);
@@ -46,8 +47,9 @@ const Main = () => {
           })}
         </div>
       ) : null}
-      <aside className="memes_filters col-12 col-3">
+      <aside className="memes_filters col-12 col-sm-3">
         {/* Filters here */}
+        <Donate />
       </aside>
     </div>
   );
