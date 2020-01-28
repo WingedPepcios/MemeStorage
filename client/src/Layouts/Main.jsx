@@ -7,6 +7,7 @@ import { Meme } from '../Components/Meme';
 import { Reactions } from '../Components/Reaction';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
+import Donate from '../Components/Donate/Donate';
 import { Pagination } from '../Components/Pagination';
 
 const Main = () => {
@@ -56,8 +57,9 @@ const Main = () => {
           <Pagination />
         </div>
       ) : null}
-      <aside className="memes_filters col-12 col-3">
+      <aside className="memes_filters col-12 col-sm-3">
         {/* Filters here */}
+        <Donate />
       </aside>
     </div>
   );
