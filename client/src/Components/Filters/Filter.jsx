@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Input } from '../Input';
+import './Filter.scss';
 
 const Filter = ({
   children,
@@ -8,16 +9,16 @@ const Filter = ({
   onChange,
   isActive,
 }) => (
-  <div className="filter">
-    <Input
-      type="checkbox"
-      name={name}
-      checked={isActive}
-      onChange={(target) => onChange({ name, value: target.checked })}
-    >
-      {children}
-    </Input>
-  </div>
+  <Input
+    type="checkbox"
+    name={name}
+    checked={isActive}
+    onChange={(target) => onChange({ name, value: target.checked })}
+    classes="filter"
+    id={`filter_${name}`}
+  >
+    {children}
+  </Input>
 );
 
 export default Filter;

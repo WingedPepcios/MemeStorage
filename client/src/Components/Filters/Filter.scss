@@ -1,0 +1,30 @@
+@import '../../Styles/variables';
+
+.filters {
+  &__elements {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+  }
+}
+
+.filter {
+  margin: .5rem;
+  .form {
+    &__input {
+      display: none;
+
+      &:checked + .form__label {
+        background-color: $color_primary;
+      }
+    }
+    &__label {
+      display: inline-block;
+      padding: 7px 8px 7px;
+      cursor: pointer;
+      background-color: $background_bright;
+    }
+  }
+
+}
