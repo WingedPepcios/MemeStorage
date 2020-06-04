@@ -41,6 +41,13 @@ body {
   }
 }
 
+aside {
+  &.aside {
+    position: sticky;
+    top: 15px;
+  }
+}
+
 img {
   max-width: 100%;
   vertical-align: top;

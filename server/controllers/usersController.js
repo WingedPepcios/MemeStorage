@@ -83,7 +83,7 @@ module.exports = {
 
   logout: (req, res) => {
     req.logout();
-    res.send({ status: 1, message: 'Logged out sucessful' });
+    res.status(200).send({ status: 1, message: 'Logged out sucessful', redirect: '/' });
   },
 
   removeUser: async (req, res, next) => {

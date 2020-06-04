@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +17,7 @@ import {
 } from '../../Types/Routes';
 import { logoutUser } from '../../Actions/Dispatch';
 import './Header.scss';
+import Logo from '../../gfx/logo.png';
 
 const Header = () => {
   const { user } = useSelector((state) => state);
@@ -31,12 +33,20 @@ const Header = () => {
       <div className="row align-items-center">
         <h1 className="logo col-5 col-sm-5">
           <Link to={DEFAULT_PAGE}>
-            <strong className="d-block">MemeStorage</strong>
-            <span className="d-block">Memy i nie tylko...</span>
+            {
+              user && user.privileges > 0
+                ? <img src={Logo} alt="IdoMeme" />
+                : (
+                  <>
+                    <strong className="d-block">MemeStorage</strong>
+                    <span className="d-block">Memy i nie tylko...</span>
+                  </>
+                )
+            }
           </Link>
         </h1>
         {
-          user
+          user && user.username
             ? (
               <Menu type="byLink">
                 <MenuLink to={DEFAULT_PAGE}>
@@ -63,22 +73,24 @@ const Header = () => {
         }
         <div className="account ml-auto">
           {
-            user
-              ? (
-                <button
-                  type="button"
-                  onClick={() => dispatch(logoutUser())}
-                  className="ml-3 p-3"
-                >
-                  <i className="fas fa-power-off" />
-                </button>
-              )
-              : (
-                <>
-                  <Link to={LOGIN_PAGE} className="ml-3 p-3"><i className="fas fa-user" /></Link>
-                  <Link to={REGISTER_PAGE} className="ml-3 p-3"><i className="fas fa-user-plus" /></Link>
-                </>
-              )
+            user !== null
+              ? user.username
+                ? (
+                  <button
+                    type="button"
+                    onClick={() => dispatch(logoutUser())}
+                    className="ml-3 p-3"
+                  >
+                    <i className="fas fa-power-off" />
+                  </button>
+                )
+                : (
+                  <>
+                    <Link to={LOGIN_PAGE} className="ml-3 p-3"><i className="fas fa-user" /></Link>
+                    <Link to={REGISTER_PAGE} className="ml-3 p-3"><i className="fas fa-user-plus" /></Link>
+                  </>
+                )
+              : null
           }
         </div>
       </div>

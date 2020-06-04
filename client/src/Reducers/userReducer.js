@@ -14,7 +14,7 @@ const userReducer = (state = null, action) => {
       };
     }
     case DELETE_USER_DATA:
-      return null;
+      return { isChecked: true };
     default:
       return state;
   }

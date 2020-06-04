@@ -4,11 +4,14 @@ import React, {
   useCallback,
   useRef,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 import Form from '../Form';
 import { Input } from '../Input';
 import { postMeme } from '../../Actions';
+import { dispatchMemes } from '../../Actions/Dispatch';
 
 import './Uploader.scss';
 import { useLabels } from '../Label';
@@ -19,6 +22,8 @@ const Uploader = () => {
   const [memePreview, setMemePreview] = useState('');
   const { user } = useSelector((state) => state);
   const memeRef = useRef(null);
+  const dispatch = useDispatch();
+  const { search } = useLocation();
 
   const {
     Labels,
@@ -50,10 +55,13 @@ const Uploader = () => {
         setMemePreview('');
         setList([]);
         memeRef.current.value = null;
+
+        const query = queryString.parse(search, { arrayFormat: 'comma' });
+        dispatch(dispatchMemes(query, user.username));
       }
       // TODO - Alerty!
     },
-    [memePrivileges, memeTitle, memeRef, List, setList],
+    [memePrivileges, memeTitle, memeRef, List, setList, dispatch, user.username],
   );
 
   const showPrivilegesData = () => {

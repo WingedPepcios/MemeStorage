@@ -34,36 +34,39 @@ const Register = () => {
   return (
     <Form classes="login__form row align-items-center flex-column" onSubmit={handleSubmit}>
       <h2 className="mb-5">Zaloguj się do systemu</h2>
-      <Input
-        name="username"
-        type="text"
-        value={username}
-        onChange={(target) => setUsername(target.value)}
-        classes="col-12 col-sm-6"
-      >
-        Login
-      </Input>
-      <Input
-        name="passwordRepeat"
-        type="password"
-        value={passwordRepeat}
-        onChange={(target) => setPasswordRepeat(target.value)}
-        classes="col-12 col-sm-6"
-        minLength="10"
-      >
-        Password
-      </Input>
-      <Input
-        name="password"
-        type="password"
-        value={password}
-        onChange={(target) => setPassword(target.value)}
-        classes="col-12 col-sm-6"
-        legend="Hasło powinno składać się z conajmniej 10 znaków!"
-        minLength="10"
-      >
-        Repeat password
-      </Input>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="username"
+          type="text"
+          value={username}
+          onChange={(target) => setUsername(target.value)}
+        >
+          Login
+        </Input>
+      </div>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="passwordRepeat"
+          type="password"
+          value={passwordRepeat}
+          onChange={(target) => setPasswordRepeat(target.value)}
+          minLength="10"
+        >
+          Password
+        </Input>
+      </div>
+      <div className="col-12 col-sm-6">
+        <Input
+          name="password"
+          type="password"
+          value={password}
+          onChange={(target) => setPassword(target.value)}
+          legend="Hasło powinno składać się z conajmniej 10 znaków!"
+          minLength="10"
+        >
+          Repeat password
+        </Input>
+      </div>
       <div className="col-12 col-sm-6 form__buttons">
         <button type="submit" className="d-block btn --solid mb-4">Zarejestruj się!</button>
         <Link to={LOGIN_PAGE}>lub zaloguj się</Link>

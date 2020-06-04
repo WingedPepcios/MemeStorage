@@ -16,6 +16,10 @@ header {
     font-size: 1.3rem;
     color: $color_gray;
   }
+  img {
+    max-height: 6rem;
+    width: auto;
+  }
 }
 
 .account {

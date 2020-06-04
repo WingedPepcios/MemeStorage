@@ -7,6 +7,7 @@ const Tag = new Schema({
     type: String,
     unique: true,
   },
+  priviliges: [Number],
 });
 
 mongoose.model('tag', Tag);
