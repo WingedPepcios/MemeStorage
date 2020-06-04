@@ -93,7 +93,7 @@ module.exports = {
     }
 
     const options = {
-      limit: 1,
+      limit: 20,
       page: page || 1,
       sort: { date: -1 },
       select: {
