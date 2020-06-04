@@ -5,12 +5,10 @@ const Form = ({
   id,
   onSubmit,
   children,
-}) => {
-  return (
-    <form id={id} onSubmit={onSubmit} className={classes}>
-      {children}
-    </form>
-  );
-};
+}) => (
+  <form id={id} onSubmit={onSubmit} className={classes}>
+    {children}
+  </form>
+);
 
 export default Form;

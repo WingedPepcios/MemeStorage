@@ -1,7 +1,10 @@
 export const SET_USER_DATA = 'setUserData';
 export const DELETE_USER_DATA = 'deleteUserData';
 export const SET_MEMES_ARRAY = 'setMemesData';
+export const CLEAR_MEMES_ARRAY = 'clearMemesData';
 export const SET_MEMES_PAGIN = 'setMemesPagin';
+export const CLEAR_MEMES_PAGIN = 'clearMemesPagin';
 export const SET_MEMES_FILTERS = 'setMemesFilters';
 export const SET_MODAL = 'setModal';
 export const POP_MODAL = 'popModal';
+export const SET_USER_MEMES = 'setUserMemes';

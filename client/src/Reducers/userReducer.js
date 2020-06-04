@@ -9,7 +9,7 @@ const userReducer = (state = null, action) => {
         ...payload,
       };
     case DELETE_USER_DATA:
-      return null;
+      return { isChecked: true };
     default:
       return state;
   }

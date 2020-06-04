@@ -23,7 +23,6 @@ import {
   REGISTER_PAGE,
   MEME_PAGE,
   SETTINGS_PAGE,
-  PAGINATION,
 } from './Types/Routes';
 import { dispatchUserData } from './Actions/Dispatch';
 
@@ -38,6 +37,10 @@ const MemesApp = () => {
     dispatch(dispatchUserData());
   }, [dispatch]);
 
+  if (user === null || !user.isChecked) {
+    return null;
+  }
+
   return (
     <Router>
       <Header />
@@ -45,31 +48,36 @@ const MemesApp = () => {
         <Switch>
           <Route path={LOGIN_PAGE}>
             {
-              user
+              user.username
                 ? <Redirect to={PANEL_PAGE} />
                 : <Login />
             }
           </Route>
           <Route path={REGISTER_PAGE}>
             {
-              user
+              user.username
                 ? <Redirect to={PANEL_PAGE} />
                 : <Register />
             }
           </Route>
           <Route path={PANEL_PAGE}>
-            <Dashboard />
+            {
+              user.username
+                ? <Dashboard />
+                : <Redirect to={DEFAULT_PAGE} />
+            }
           </Route>
           <Route path={SETTINGS_PAGE}>
-            <Settings />
+            {
+              user.username
+                ? <Settings />
+                : <Redirect to={DEFAULT_PAGE} />
+            }
           </Route>
           <Route path={`${MEME_PAGE}/:id`}>
             <SingleMeme />
           </Route>
           <Route exact path={DEFAULT_PAGE}>
-            <Main />
-          </Route>
-          <Route path={`${PAGINATION}/:page`}>
             <Main />
           </Route>
         </Switch>

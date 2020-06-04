@@ -4,6 +4,9 @@ import {
   DELETE_USER_DATA,
   SET_MEMES_PAGIN,
   SET_MEMES_FILTERS,
+  SET_USER_MEMES,
+  CLEAR_MEMES_ARRAY,
+  CLEAR_MEMES_PAGIN,
 } from '../Types/Reducers';
 import { getCurrentUserData, getMemes, logoutUserFunction } from './index';
 
@@ -12,7 +15,12 @@ export const dispatchUserData = () => async function dispatchUserDataPromise(dis
   if (response) {
     dispatch({
       type: SET_USER_DATA,
-      payload: response,
+      payload: { isChecked: true, ...response },
+    });
+  } else {
+    dispatch({
+      type: SET_USER_DATA,
+      payload: { isChecked: true },
     });
   }
 };
@@ -35,14 +43,21 @@ export const logoutUser = () => async function logaoutUserPromise(dispatch) {
   }
 };
 
-export const dispatchMemes = (page, query) => async function dispatchMemesPromise(dispatch) {
-  const response = await getMemes(page, query);
+export const dispatchMemes = (query, user) => async function dispatchMemesPromise(dispatch) {
+  const response = await getMemes(query, user);
   if (response) {
     const { memes, pagination, filters } = response;
-    dispatch({
-      type: SET_MEMES_ARRAY,
-      payload: memes,
-    });
+    if (user) {
+      dispatch({
+        type: SET_USER_MEMES,
+        payload: memes,
+      });
+    } else {
+      dispatch({
+        type: SET_MEMES_ARRAY,
+        payload: memes,
+      });
+    }
     dispatch({
       type: SET_MEMES_PAGIN,
       payload: pagination,
@@ -50,6 +65,22 @@ export const dispatchMemes = (page, query) => async function dispatchMemesPromis
     dispatch({
       type: SET_MEMES_FILTERS,
       payload: filters,
+    });
+  } else {
+    if (user) {
+      dispatch({
+        type: CLEAR_MEMES_ARRAY,
+        payload: null,
+      });
+    } else {
+      dispatch({
+        type: CLEAR_MEMES_ARRAY,
+        payload: null,
+      });
+    }
+    dispatch({
+      type: CLEAR_MEMES_PAGIN,
+      payload: null,
     });
   }
 };

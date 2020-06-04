@@ -1,4 +1,4 @@
-import { SET_MEMES_ARRAY } from '../Types/Reducers';
+import { SET_MEMES_ARRAY, CLEAR_MEMES_ARRAY } from '../Types/Reducers';
 
 const memeReducer = (state = null, action) => {
   const { type, payload } = action;
@@ -7,6 +7,8 @@ const memeReducer = (state = null, action) => {
       return [
         ...payload,
       ];
+    case CLEAR_MEMES_ARRAY:
+      return null;
     default:
       return state;
   }

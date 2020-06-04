@@ -24,8 +24,8 @@ export const getCurrentUserData = async () => {
   return null;
 };
 
-export const getUserMemes = async (user) => {
-  const response = await http.get(`${MEME_DEFAULT}/${user}`);
+export const getUserMemes = async (user, page) => {
+  const response = await http.get(`${MEME_DEFAULT}/${user}`, { page: page || 1 });
   const { status, memes } = response.data;
   if (status) {
     return memes;
@@ -33,8 +33,8 @@ export const getUserMemes = async (user) => {
   return null;
 };
 
-export const getMemes = async (page, query) => {
-  const response = await http.get(MEME_DEFAULT, { page: page || 1, ...query });
+export const getMemes = async (query, user) => {
+  const response = await http.get(`${MEME_DEFAULT}${user ? `/${user}` : ''}`, { ...query });
   const {
     status,
     memes,

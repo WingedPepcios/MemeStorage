@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
-import { getUserMemes } from '../../Actions';
+import { dispatchMemes } from '../../Actions/Dispatch';
 import UserMeme from './UserMeme';
+import NoMeme from '../MemesNotFound/NoMeme';
+import { Pagination } from '../Pagination';
 
 import './UserMemes.scss';
 
 const UserMemes = () => {
-  const [userMemes, setUserMemes] = useState(null);
-  const { user } = useSelector((state) => state);
+  const { user, userMemes } = useSelector((state) => state);
+  const { search } = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
-      const getData = async () => {
-        const response = await getUserMemes(user.username);
-        setUserMemes(response);
-      };
-      getData();
+    if (user && user.username) {
+      const query = queryString.parse(search, { arrayFormat: 'comma' });
+      dispatch(dispatchMemes(query, user.username));
     }
-
-    return () => setUserMemes(null);
-  }, [user]);
+  }, [user, user.username, search, dispatch]);
 
   return (
     <section className="user_memes">
@@ -50,9 +50,10 @@ const UserMemes = () => {
                   />
                 );
               })}
+              <Pagination />
             </>
           )
-          : null
+          : <NoMeme isUser />
       }
     </section>
   );

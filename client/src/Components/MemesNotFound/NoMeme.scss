@@ -1,0 +1,15 @@
+@import '../../Styles/variables';
+
+.meme-list__empty {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 5rem;
+
+  .--area {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background_bright;
+  }
+}
