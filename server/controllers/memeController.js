@@ -22,7 +22,20 @@ module.exports = {
       data.memePrivileges = setPrivileges;
     }
     if (tags) {
-      data.tags = JSON.parse(tags);
+      const tagsData = JSON.parse(tags);
+      await Tag.updateMany({
+        _id: {
+          $in: tagsData.map((tag) => mongoose.Types.ObjectId(tag.id)),
+        },
+      }, {
+        $addToSet: { priviliges: setPrivileges },
+      });
+      data.tags = tagsData.map((tag) => ({
+        ...tag,
+        priviliges: [
+          ...new Set(tag.priviliges ? [...tag.priviliges, setPrivileges] : setPrivileges),
+        ],
+      }));
     }
 
     const newMeme = await new Meme({
@@ -80,7 +93,7 @@ module.exports = {
     }
 
     const options = {
-      limit: 20,
+      limit: 1,
       page: page || 1,
       sort: { date: -1 },
       select: {
@@ -100,7 +113,10 @@ module.exports = {
       return res.status(404).send({ status: 0, message: 'Ups! There is no meme for you' });
     }
 
-    const tags = await Tag.find({}, { name: 1, _id: 0 });
+    const tagPriv = permissions
+      ? { $in: perms.filter((lvl) => lvl <= privileges) }
+      : { $lte: privileges };
+    const tags = await Tag.find({ priviliges: tagPriv }, { name: 1, _id: 0 });
 
     const {
       docs,
@@ -156,8 +172,17 @@ module.exports = {
 
     const { title, setPrivileges, tags } = req.body;
     if (title) meme.title = title;
-    if (setPrivileges) meme.memePrivileges = setPrivileges;
     if (tags) meme.tags = tags;
+    if (setPrivileges) {
+      meme.memePrivileges = setPrivileges;
+      await Tag.updateMany({
+        _id: {
+          $in: tags.map((tag) => mongoose.Types.ObjectId(tag.id)),
+        },
+      }, {
+        $addToSet: { priviliges: setPrivileges },
+      });
+    }
 
     const response = await meme.save();
     if (!response) {
@@ -166,7 +191,8 @@ module.exports = {
     return res.status(200).send({ status: 1, response });
   },
   getFilters: async (req, res) => {
-    const tags = await Tag.find({});
+    const privileges = req.user ? req.user.privileges : 0;
+    const tags = await Tag.find({ privileges: { $lte: privileges } });
 
     const filters = {};
     if (tags && tags.length) {
