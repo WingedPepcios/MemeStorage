@@ -28,6 +28,7 @@
     "eslint-plugin-react-hooks": "^1.7.0"
   },
   "dependencies": {
-    "concurrently": "^5.0.2"
+    "concurrently": "^5.0.2",
+    "react-ga": "^2.7.0"
   }
 }

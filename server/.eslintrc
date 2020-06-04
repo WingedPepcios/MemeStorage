@@ -3,7 +3,7 @@
   "env": {
     "node": true,
     "es6": true,
-    "browser": true,
+    "browser": true
   },
   "extends": [
     "airbnb-base"
@@ -11,5 +11,8 @@
   "rules": {
       "linebreak-style": 0,
       "no-unneeded-ternary": 0
+  },
+  "ecmaFeatures": {
+    "modules": true
   }
 }

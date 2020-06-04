@@ -1,8 +1,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+import { pageview } from '../../Utils/Analytics';
 
 import { Menu, MenuLink } from '../Menu';
 import {
@@ -20,6 +22,11 @@ import Logo from '../../gfx/logo.png';
 const Header = () => {
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    pageview(location.pathname);
+  }, [location]);
 
   return (
     <header className="container mb-5">

@@ -48,8 +48,8 @@ module.exports = {
   currentUser: (req, res, next) => {
     const { user } = req;
     if (user) {
-      const { username, isAdmin, privileges } = user;
-      return res.send({ status: 1, user: { username, isAdmin, privileges } });
+      const { username, isAdmin, privileges, _id } = user;
+      return res.send({ status: 1, user: { username, isAdmin, privileges, id: _id } });
     }
     return next();
   },

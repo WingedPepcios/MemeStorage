@@ -8,6 +8,7 @@ import { Meme } from '../Components/Meme';
 import { Reactions } from '../Components/Reaction';
 import { dispatchMemes } from '../Actions/Dispatch';
 import getStringFromDate from '../Utils/StringFromDate';
+import Donate from '../Components/Donate/Donate';
 import { Pagination } from '../Components/Pagination';
 import Filters from '../Components/Filters/Filters';
 import NoMeme from '../Components/MemesNotFound/NoMeme';
@@ -66,6 +67,7 @@ const Main = () => {
       </div>
       <aside className="aside col-12 col-sm-3">
         <Filters user={user} filters={filters} />
+        <Donate />
       </aside>
     </div>
   );
