@@ -18,6 +18,7 @@ const {
   USER_DEFAULT,
 } = require('../templates/types').user;
 
+const upload = require('../middleware/upload');
 const { requireLogin, requireAdmin } = require('../middleware/login');
 
 module.exports = () => {
@@ -45,7 +46,7 @@ module.exports = () => {
   api.post(USER_DEFAULT, loginUser);
 
   // POST /users/:username?values
-  api.post(USER_NAME, requireLogin, update);
+  api.post(USER_NAME, requireLogin, upload.single('avatar'), update);
 
   // DELETE /users/:username
   api.delete(USER_NAME, requireLogin, removeUser);

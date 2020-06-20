@@ -33,11 +33,20 @@ export const logoutUser = () => async function logaoutUserPromise(dispatch) {
     });
 
     // Getting memes again, without user settings
-    const memes = await getMemes();
-    if (memes) {
+    const responseMemes = await getMemes({}, null);
+    if (responseMemes) {
+      const { memes, pagination, filters } = responseMemes;
       dispatch({
         type: SET_MEMES_ARRAY,
         payload: memes,
+      });
+      dispatch({
+        type: SET_MEMES_PAGIN,
+        payload: pagination,
+      });
+      dispatch({
+        type: SET_MEMES_FILTERS,
+        payload: filters,
       });
     }
   }

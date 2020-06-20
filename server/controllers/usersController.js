@@ -2,7 +2,9 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const pathFix = require('path');
 const { validRegisterData } = require('../services/validation');
+
 
 const User = mongoose.model('user');
 
@@ -48,8 +50,23 @@ module.exports = {
   currentUser: (req, res, next) => {
     const { user } = req;
     if (user) {
-      const { username, isAdmin, privileges, _id } = user;
-      return res.send({ status: 1, user: { username, isAdmin, privileges, id: _id } });
+      const {
+        username,
+        isAdmin,
+        privileges,
+        _id,
+        avatar,
+      } = user;
+      return res.send({
+        status: 1,
+        user: {
+          username,
+          isAdmin,
+          privileges,
+          id: _id,
+          avatar,
+        },
+      });
     }
     return next();
   },
@@ -108,10 +125,13 @@ module.exports = {
   },
 
   update: async (req, res, next) => {
-    const { user } = req;
+    const { user, file } = req;
     const { username } = req.params;
-    if (user.username === username || user.isAdmin) {
-      const userToUpdate = await User.findOne({ username });
+
+    if (user.username || user.isAdmin) {
+      const usernameFind = user.isAdmin && username ? username : user.username;
+
+      const userToUpdate = await User.findOne({ username: usernameFind });
       if (!userToUpdate) {
         return res.status(404).send({ status: 0, message: 'User not found!' });
       }
@@ -125,6 +145,10 @@ module.exports = {
       if (password) {
         const hash = await bcrypt.hash(password, 10);
         userToUpdate.password = hash;
+      }
+
+      if (file && file.path) {
+        userToUpdate.avatar = file.path.replace(pathFix.resolve(__dirname, '../data'), '');
       }
 
       userToUpdate.save();

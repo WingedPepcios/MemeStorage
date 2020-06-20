@@ -27,7 +27,7 @@ module.exports = () => {
   const api = Router();
 
   // POST /memes
-  api.post(MEME_DEFAULT, requireLogin, upload.single('image'), addMeme);
+  api.post(MEME_DEFAULT, requireLogin, upload.single('meme'), addMeme);
 
   // DELETE /
   api.delete(MEME_BY_ID, requireLogin, removeMeme);

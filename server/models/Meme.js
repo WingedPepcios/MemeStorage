@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const Meme = new Schema({
   authorId: {
     type: Schema.ObjectId,
-    ref: 'User',
+    ref: 'user',
   },
   author: String,
   url: {

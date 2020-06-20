@@ -102,8 +102,8 @@ export const postRegisterUser = async ({ username, password, passwordRepeat }) =
   return { error: message };
 };
 
-export const postUpdateUser = async ({ password, passwordRepeat, username }) => {
-  const response = await http.post(`${USER_DEFAULT}/${username}`, { password, passwordRepeat });
+export const postUpdateUser = async (data, username) => {
+  const response = await http.post(`${USER_DEFAULT}/${username}`, data);
   const { status, message } = response.data;
   if (status) {
     return message;

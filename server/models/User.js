@@ -18,6 +18,7 @@ const User = new Schema({
   // },
   isAdmin: { type: Boolean, default: false },
   privileges: { type: Number, default: 0 },
+  avatar: { type: String, default: '/users/default.png' },
   removed: {
     type: Boolean,
     default: false,

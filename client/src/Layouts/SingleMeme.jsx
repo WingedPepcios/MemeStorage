@@ -51,6 +51,7 @@ const SingleMeme = () => {
                 labels={singleMeme.memePrivileges}
                 isUser={!user === false}
                 tags={singleMeme.tags}
+                avatar={singleMeme.authorId.avatar}
               />
               <Reactions
                 id={singleMeme._id}

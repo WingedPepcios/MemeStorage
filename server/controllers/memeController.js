@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 const pathFix = require('path');
+const fs = require('fs');
 
 const Meme = mongoose.model('meme');
 const Tag = mongoose.model('tag');
@@ -60,6 +61,8 @@ module.exports = {
       return res.status(401).send({ status: 0, message: 'Access Denied!' });
     }
 
+    await fs.unlink(pathFix.join(pathFix.resolve(__dirname, '../data/'), meme.url), (err) => console.log(err));
+
     const response = await meme.remove();
     if (!response) {
       return res.status(404).send({ status: 0, message: 'Ups! There is some problem with this meme' });
@@ -96,6 +99,10 @@ module.exports = {
       limit: 20,
       page: page || 1,
       sort: { date: -1 },
+      populate: {
+        path: 'authorId',
+        select: { avatar: 1, username: 1 },
+      },
       select: {
         _id: 1,
         url: 1,
@@ -154,7 +161,10 @@ module.exports = {
       return res.redirect(301, PAGE_MAIN);
     }
     const privileges = req.user ? req.user.privileges : 0;
-    const meme = await Meme.findOne({ _id: id, memePrivileges: { $lte: privileges } });
+    const meme = await Meme.findOne({ _id: id, memePrivileges: { $lte: privileges } }).populate({
+      path: 'authorId',
+      select: { username: 1, avatar: 1 },
+    });
 
     if (!meme) {
       return res.status(404).send({ status: 0, message: 'Meme not found!' });
