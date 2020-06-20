@@ -3,10 +3,32 @@ const path = require('path');
 
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
-    cb(null, `${req.user.username}_${Date.now()}.${file.mimetype.split('/')[1]}`);
+    const { fieldname } = file;
+    switch (fieldname) {
+      case 'meme':
+        cb(null, `${req.user.username}_${Date.now()}.${file.mimetype.split('/')[1]}`);
+        break;
+      case 'avatar':
+        cb(null, `${req.user.username}_avatar.${file.mimetype.split('/')[1]}`);
+        break;
+      default:
+        cb(null, `${req.user.username}_${Date.now()}.${file.mimetype.split('/')[1]}`);
+        break;
+    }
   },
-  destination: (req, res, cb) => {
-    cb(null, path.resolve(__dirname, '../data/images'));
+  destination: (req, file, cb) => {
+    const { fieldname } = file;
+    switch (fieldname) {
+      case 'meme':
+        cb(null, path.resolve(__dirname, '../data/images'));
+        break;
+      case 'avatar':
+        cb(null, path.resolve(__dirname, '../data/users'));
+        break;
+      default:
+        cb(null, path.resolve(__dirname, '../data/images'));
+        break;
+    }
   },
 });
 

@@ -3,3 +3,6 @@ data/images/*.*
 .env
 .dockerignore
 scripts
+
+
+debug.log

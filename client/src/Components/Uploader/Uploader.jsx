@@ -2,7 +2,7 @@
 import React, {
   useState,
   useCallback,
-  useRef,
+  // useRef,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -15,15 +15,15 @@ import { dispatchMemes } from '../../Actions/Dispatch';
 
 import './Uploader.scss';
 import { useLabels } from '../Label';
+import { useImageInput } from '../../Atoms/useImageInput';
 
 const Uploader = () => {
   const [memePrivileges, setMemePrivileges] = useState('0');
   const [memeTitle, setMemeTitle] = useState('');
-  const [memePreview, setMemePreview] = useState('');
   const { user } = useSelector((state) => state);
-  const memeRef = useRef(null);
   const dispatch = useDispatch();
   const { search } = useLocation();
+  const [imageRef, image, clearImage] = useImageInput({ title: 'Dodaj zdjęcie', alt: 'Zaktualizuj zdjęcie' });
 
   const {
     Labels,
@@ -43,7 +43,7 @@ const Uploader = () => {
       e.preventDefault();
 
       const data = new FormData();
-      data.append('image', memeRef.current.files[0]);
+      data.append('meme', imageRef.current.files[0]);
       data.append('setPrivileges', memePrivileges);
       data.append('title', memeTitle);
       data.append('tags', JSON.stringify(List));
@@ -52,16 +52,16 @@ const Uploader = () => {
       if (response) {
         setMemePrivileges('0');
         setMemeTitle('');
-        setMemePreview('');
+        clearImage('');
         setList([]);
-        memeRef.current.value = null;
+        imageRef.current.value = null;
 
         const query = queryString.parse(search, { arrayFormat: 'comma' });
         dispatch(dispatchMemes(query, user.username));
       }
       // TODO - Alerty!
     },
-    [memePrivileges, memeTitle, memeRef, List, setList, dispatch, user.username],
+    [memePrivileges, memeTitle, imageRef, List, setList, dispatch, user.username, clearImage, search],
   );
 
   const showPrivilegesData = () => {
@@ -113,16 +113,6 @@ const Uploader = () => {
     return privileges;
   };
 
-  const renderImage = (target) => {
-    const file = target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = function convertToBase64() {
-      setMemePreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   return (
     <Form classes="uploader row mx-0 py-4" onSubmit={handleSubmit}>
       <div className="col-12 headline">Dodaj Mem</div>
@@ -148,19 +138,8 @@ const Uploader = () => {
             : null
         }
       </div>
-      <div className="form__group --file col-12 col-sm-6">
-        <label htmlFor="memePicture">
-          {
-            memePreview
-              ? (
-                <img src={memePreview} alt={memeTitle} />
-              )
-              : (
-                <span>Dodaj zdjęcie</span>
-              )
-          }
-        </label>
-        <input id="memePicture" type="file" ref={memeRef} onChange={(e) => renderImage(e.target)} className="form__input" />
+      <div className="col-12 col-sm-6">
+        {image}
       </div>
       <div className="col-12">
         <button className="btn --solid" type="submit">Udostępnij</button>

@@ -17,26 +17,36 @@ const Meme = ({
   labels,
   isLinked,
   tags,
+  avatar,
 }) => (
   <section className="meme mb-3">
-    <div className="meme__description mb-3">
-      <div className="meme__title mb-2">
-        {
-          isLinked
-            ? (
-              <Link to={`${MEME_PAGE}/${id}`}>{title}</Link>
-            )
-            : (
-              <strong>{title}</strong>
-            )
-        }
+    <div className="meme__description row align-items-center mb-3">
+      <div className="meme__author-avatar">
+        <LazyLoadImage
+          alt={author}
+          src={avatar}
+          effect="opacity"
+        />
       </div>
-      <div className="meme__bottom">
-        <i className="meme__date mr-3">{date}</i>
-        <span className="meme__author">
-          <span>Autor: </span>
-          <strong>{author}</strong>
-        </span>
+      <div className="meme__description-right">
+        <div className="meme__title mb-2">
+          {
+            isLinked
+              ? (
+                <Link to={`${MEME_PAGE}/${id}`}>{title}</Link>
+              )
+              : (
+                <strong>{title}</strong>
+              )
+          }
+        </div>
+        <div className="meme__bottom">
+          <i className="meme__date mr-3">{date}</i>
+          <span className="meme__author">
+            <span>Autor: </span>
+            <strong>{author}</strong>
+          </span>
+        </div>
       </div>
     </div>
     <div className={`meme__image ${labels ? 'meme__danger' : ''}`}>

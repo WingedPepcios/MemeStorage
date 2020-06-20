@@ -26,28 +26,26 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     text-decoration: none;
-    position: relative;
     height: 60px;
     text-transform: uppercase;
-
-    &:after {
-      content: '';
-      width: 0;
-      transition: width .3s;
-      height: 6px;
-      background-color: $color_primary;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      position: absolute;
-      margin: auto;
+    transition: background-color .2s;
+    color: $color_gray;
+    
+    @media (min-width: 979px) {
+      color: $color_default;
+      margin: 0 .5rem;
     }
 
-    &.active {
-      &:after {
-        content: '';
-        width: 100%;
+    &.active,
+    &:hover {
+      color: $color_default;
+        
+      @media (min-width: 979px) {
+        color: $color_default;
+        background-color: $background_bright;
       }
     }
+
+
   }
 }

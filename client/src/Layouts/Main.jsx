@@ -39,6 +39,7 @@ const Main = () => {
                 date,
                 memePrivileges,
                 reactions,
+                authorId,
               } = meme;
               return (
                 <div key={_id} className="mb-5">
@@ -50,6 +51,7 @@ const Main = () => {
                     date={getStringFromDate(date)}
                     labels={memePrivileges}
                     isLinked
+                    avatar={authorId.avatar}
                   />
                   <Reactions
                     id={_id}
