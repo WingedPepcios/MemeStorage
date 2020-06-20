@@ -2,7 +2,8 @@
 
 .filters {
   margin-bottom: 2rem;
-  
+  display: none;
+
   &__elements {
     display: flex;
     flex-wrap: wrap;
