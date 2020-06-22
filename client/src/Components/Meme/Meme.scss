@@ -1,9 +1,18 @@
 @import '../../Styles/variables';
 
 .meme {
+  &__description {
+    flex-wrap: nowrap !important;
+
+    &-right {
+      width: calc(100% - 76px);
+      padding-right: 1.5rem;
+    }
+  }
   &__author {
     &-avatar {
       padding: 0 1rem 0 1.5rem;
+      min-width: 76px;
 
       img {
         width: auto;
@@ -13,6 +22,9 @@
   }
   &__title {
     font-size: 2.4rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 
     a {
       text-decoration: none;

@@ -38,31 +38,28 @@ const Uploader = () => {
     setMemePrivileges(target.value);
   };
 
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      const data = new FormData();
-      data.append('meme', imageRef.current.files[0]);
-      data.append('setPrivileges', memePrivileges);
-      data.append('title', memeTitle);
-      data.append('tags', JSON.stringify(List));
+    const data = new FormData();
+    data.append('meme', imageRef.current.files[0]);
+    data.append('setPrivileges', memePrivileges);
+    data.append('title', memeTitle);
+    data.append('tags', JSON.stringify(List));
 
-      const response = await postMeme(data);
-      if (response) {
-        setMemePrivileges('0');
-        setMemeTitle('');
-        clearImage('');
-        setList([]);
-        imageRef.current.value = null;
+    const response = await postMeme(data);
+    if (response) {
+      setMemePrivileges('0');
+      setMemeTitle('');
+      clearImage('');
+      setList([]);
+      imageRef.current.value = null;
 
-        const query = queryString.parse(search, { arrayFormat: 'comma' });
-        dispatch(dispatchMemes(query, user.username));
-      }
-      // TODO - Alerty!
-    },
-    [memePrivileges, memeTitle, imageRef, List, setList, dispatch, user.username, clearImage, search],
-  );
+      const query = queryString.parse(search, { arrayFormat: 'comma' });
+      dispatch(dispatchMemes(query, user.username));
+    }
+    // TODO - Alerty!
+  };
 
   const showPrivilegesData = () => {
     const privileges = [(
@@ -138,7 +135,7 @@ const Uploader = () => {
             : null
         }
       </div>
-      <div className="col-12 col-sm-6">
+      <div className="col-12 col-sm-6 mb-3">
         {image}
       </div>
       <div className="col-12">
