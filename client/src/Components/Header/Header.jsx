@@ -55,6 +55,9 @@ const Header = () => {
                 <Link to={LOGIN_PAGE} className="ml-3 p-3">
                   <i className="fas fa-user" />
                 </Link>
+                <Link to={REGISTER_PAGE} className="ml-3 p-3">
+                  <i className="fas fa-user-plus" />
+                </Link>
               </>
             )
           ) : null}
